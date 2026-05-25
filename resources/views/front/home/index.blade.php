@@ -2,6 +2,20 @@
 
 @section('content')
 
+@php
+    if (! function_exists('formatGameResult')) {
+        function formatGameResult($value) {
+            if ($value === null || $value === '') {
+                return 'XX';
+            }
+
+            return is_numeric($value) && (int) $value <= 9
+                ? str_pad($value, 2, '0', STR_PAD_LEFT)
+                : $value;
+        }
+    }
+@endphp
+
 <div class="col-md-12 text-center" style="background-color:white;">
     <div class="ads" style="padding:8px 0; margin:8px 0; background:#FF5252; color:white; text-align:center;">
         <h4 class="text-center text-black" style="font-weight:bolder;">
@@ -41,7 +55,10 @@
 
             @php
                 $todayResult = $game->todayResult->result ?? null;
+                $todayStatus = $game->todayResult->status ?? 'waiting';
+
                 $yesterdayResult = $game->yesterdayResult->result ?? null;
+                $yesterdayStatus = $game->yesterdayResult->status ?? 'waiting';
             @endphp
 
             <div class="gamebox col-md-6 col-sm-6 col-xs-6">
@@ -69,8 +86,8 @@
                     <font class="kal">कल &nbsp;&nbsp; आज</font> <br>
 
                     <font class="gameboxresult">
-                        @if(!empty($yesterdayResult))
-                            {{ is_numeric($yesterdayResult) && $yesterdayResult <= 9 ? str_pad($yesterdayResult, 2, '0', STR_PAD_LEFT) : $yesterdayResult }}
+                        @if($yesterdayStatus === 'declared' && $yesterdayResult !== null && $yesterdayResult !== '')
+                            {{ formatGameResult($yesterdayResult) }}
                         @else
                             XX
                         @endif
@@ -85,8 +102,8 @@
                 </font>
 
                 <font class="gameboxresult">
-                    @if(!empty($todayResult))
-                        {{ is_numeric($todayResult) && $todayResult <= 9 ? str_pad($todayResult, 2, '0', STR_PAD_LEFT) : $todayResult }}
+                    @if($todayStatus === 'declared' && $todayResult !== null && $todayResult !== '')
+                        {{ formatGameResult($todayResult) }}
                     @else
                         XX
                     @endif
@@ -157,8 +174,8 @@
                     @endphp
 
                     <td style="font-size:15px; font-weight:bold; background-color:#fff; padding:6px 2px 7px 2px; text-align:center;">
-                        @if(!empty($resultValue))
-                            {{ is_numeric($resultValue) && $resultValue <= 9 ? str_pad($resultValue, 2, '0', STR_PAD_LEFT) : $resultValue }}
+                        @if($resultValue !== null && $resultValue !== '')
+                            {{ formatGameResult($resultValue) }}
                         @else
                             -
                         @endif
@@ -169,8 +186,6 @@
 
     </table>
 </div>
-
-
 
 {{-- GAME YEAR RECORD CHART SECTION --}}
 <div style="background:#000; padding-bottom:25px;">
@@ -210,8 +225,8 @@
         @php
             $years = [
                 now('Asia/Kolkata')->year,
-                now('Asia/Kolkata')->subYear()->year,
-                now('Asia/Kolkata')->subYears(2)->year,
+                now('Asia/Kolkata')->copy()->subYear()->year,
+                now('Asia/Kolkata')->copy()->subYears(2)->year,
             ];
         @endphp
 
@@ -240,8 +255,6 @@
     @endforelse
 
 </div>
-
-
 
 <div class="addb" style="padding:15px; text-align:center; background:#e8f5e9; color:#000; font-weight:bold;">
     TODAY ADVICE SECTION

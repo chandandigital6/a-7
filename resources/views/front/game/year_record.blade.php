@@ -2,6 +2,20 @@
 
 @section('content')
 
+@php
+    if (! function_exists('formatGameResult')) {
+        function formatGameResult($value) {
+            if ($value === null || $value === '') {
+                return '-';
+            }
+
+            return is_numeric($value) && (int) $value <= 9
+                ? str_pad($value, 2, '0', STR_PAD_LEFT)
+                : $value;
+        }
+    }
+@endphp
+
 <div class="king-heading">
     <span style="font-weight:bold;text-align:center;margin-top:10px;background-color:#F5004F;border:2px solid #fff;padding:7px;color:#FFF;font-size:24px!important;display:flex;justify-content:center;">
         {{ strtoupper($game->name) }} SATTA RECORD CHART {{ $year }}
@@ -9,10 +23,14 @@
 </div>
 
 @php
-    $resultsByDate = $results->keyBy('result_date');
+    $resultsByDate = $results
+        ->filter(fn ($item) => !empty($item->result_date))
+        ->keyBy(function ($item) {
+            return \Carbon\Carbon::parse($item->result_date)->format('Y-m-d');
+        });
 
-    $startDate = \Carbon\Carbon::create($year, 1, 1);
-    $endDate = \Carbon\Carbon::create($year, 12, 31);
+    $startDate = \Carbon\Carbon::create($year, 1, 1, 0, 0, 0, 'Asia/Kolkata');
+    $endDate = \Carbon\Carbon::create($year, 12, 31, 0, 0, 0, 'Asia/Kolkata');
     $dates = \Carbon\CarbonPeriod::create($startDate, $endDate);
 @endphp
 
@@ -32,7 +50,9 @@
             @php
                 $dateKey = $date->format('Y-m-d');
                 $record = $resultsByDate->get($dateKey);
+
                 $resultValue = $record->result ?? null;
+                $resultStatus = $record->status ?? 'waiting';
             @endphp
 
             <tr>
@@ -41,8 +61,8 @@
                 </td>
 
                 <td style="font-size:15px;font-weight:bold;background-color:#fff;padding:6px 2px 7px 2px;text-align:center;">
-                    @if(!empty($resultValue))
-                        {{ is_numeric($resultValue) && $resultValue <= 9 ? str_pad($resultValue, 2, '0', STR_PAD_LEFT) : $resultValue }}
+                    @if($resultStatus === 'declared' && $resultValue !== null && $resultValue !== '')
+                        {{ formatGameResult($resultValue) }}
                     @else
                         -
                     @endif
