@@ -26,48 +26,74 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        $this->configureDefaults();
+   public function boot(): void
+{
+    $this->configureDefaults();
 
+    View::composer('front.layouts.header', function ($view) {
 
-     View::composer('front.layouts.header', function ($view) {
+        $apiBaseUrl = rtrim(config('services.main_api.url'), '/');
+        $today = Carbon::today('Asia/Kolkata')->format('Y-m-d');
 
-            $apiBaseUrl = rtrim(config('services.main_api.url'), '/');
-            $today = Carbon::today('Asia/Kolkata')->format('Y-m-d');
+        $headerGames = collect();
 
-            $headerGames = collect();
+        try {
+            if (blank($apiBaseUrl)) {
+                throw new \Exception('MAIN_API_URL empty hai');
+            }
 
-            try {
-                $response = Http::timeout(10)->get($apiBaseUrl . '/games-results', [
-                    'date' => $today,
-                ]);
+            $apiUrl = $apiBaseUrl . '/api/games-results';
 
-                if ($response->successful()) {
-                    $headerGames = collect($response->json('games', []))->map(function ($game) {
+            $response = Http::timeout(10)->get($apiUrl, [
+                'date' => $today,
+            ]);
+
+            \Log::info('Header games API response', [
+                'url' => $apiUrl,
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ]);
+
+            if ($response->successful()) {
+                $headerGames = collect($response->json('games', []))
+                    ->map(function ($game) {
+
+                        $result = $game['result'] ?? [];
+
                         return (object) [
                             'id' => $game['id'] ?? null,
                             'name' => $game['name'] ?? '',
                             'slug' => $game['slug'] ?? '',
                             'result_time' => $game['result_time'] ?? null,
+                            'sort_order' => $game['sort_order'] ?? 0,
 
                             'todayResult' => (object) [
-                                'result' => $game['result']['result'] ?? null,
-                                'status' => $game['result']['status'] ?? 'waiting',
-                                'show_minutes' => $game['result']['show_minutes'] ?? 10,
-                                'updated_at' => $game['result']['updated_at'] ?? null,
+                                'id' => $result['id'] ?? null,
+                                'result_date' => $result['result_date'] ?? null,
+                                'result' => $result['result'] ?? null,
+                                'status' => $result['status'] ?? 'waiting',
+                                'show_minutes' => !empty($result['show_minutes'])
+                                    ? (int) $result['show_minutes']
+                                    : 10,
+                                'updated_at' => $result['updated_at'] ?? null,
                             ],
                         ];
-                    });
-                }
-            } catch (\Throwable $e) {
-                $headerGames = collect();
+                    })
+                    ->values();
             }
 
-            $view->with('headerGames', $headerGames);
-        });
+        } catch (\Throwable $e) {
+            \Log::error('Header API Error', [
+                'url' => ($apiBaseUrl ?? '') . '/api/games-results',
+                'error' => $e->getMessage(),
+            ]);
 
-    }
+            $headerGames = collect();
+        }
+
+        $view->with('headerGames', $headerGames);
+    });
+}
 
     /**
      * Configure default behaviors for production-ready applications.

@@ -31,92 +31,81 @@
             {{ now('Asia/Kolkata')->format('d F Y | h:i A') }}
         </div>
 
-      @php
-    $now = \Carbon\Carbon::now('Asia/Kolkata');
-    $allHeaderGames = collect($headerGames ?? []);
+        @php
+            $now = \Carbon\Carbon::now('Asia/Kolkata');
+            $allHeaderGames = collect($headerGames ?? []);
 
-    /*
-    |--------------------------------------------------------------------------
-    | 1. Recently declared result games
-    | show_minutes empty/0/null ho to 10 minutes
-    |--------------------------------------------------------------------------
-    */
-    $declaredGames = $allHeaderGames
-        ->filter(function ($game) use ($now) {
+            $preparedGames = $allHeaderGames->map(function ($game) use ($now) {
 
-            if (
-                empty($game->todayResult)
-                || ($game->todayResult->status ?? null) !== 'declared'
-                || empty($game->todayResult->result)
-                || empty($game->todayResult->updated_at)
-            ) {
-                return false;
-            }
+                $isDeclared = !empty($game->todayResult)
+                    && ($game->todayResult->status ?? null) === 'declared'
+                    && !empty($game->todayResult->result)
+                    && !empty($game->todayResult->updated_at);
 
-            $showMinutes = (int) ($game->todayResult->show_minutes ?? 0);
+                $isLiveDeclared = false;
 
-            if ($showMinutes <= 0) {
-                $showMinutes = 10;
-            }
+                if ($isDeclared) {
+                    $showMinutes = (int) ($game->todayResult->show_minutes ?? 0);
 
-            $expireTime = \Carbon\Carbon::parse($game->todayResult->updated_at, 'Asia/Kolkata')
-                ->addMinutes($showMinutes);
+                    if ($showMinutes <= 0) {
+                        $showMinutes = 10;
+                    }
 
-            return $now->lessThanOrEqualTo($expireTime);
-        })
-        ->sortByDesc(function ($game) {
-            return \Carbon\Carbon::parse($game->todayResult->updated_at, 'Asia/Kolkata')->timestamp;
-        })
-        ->values();
+                    try {
+                        $expireTime = \Carbon\Carbon::parse($game->todayResult->updated_at, 'Asia/Kolkata')
+                            ->addMinutes($showMinutes);
 
-    /*
-    |--------------------------------------------------------------------------
-    | 2. Normal games by result time
-    | Declared top games ko dobara repeat nahi karna
-    |--------------------------------------------------------------------------
-    */
-    $normalGames = $allHeaderGames
-        ->reject(function ($game) use ($declaredGames) {
-            return $declaredGames->contains('slug', $game->slug);
-        })
-        ->filter(function ($game) use ($now) {
-            if (empty($game->result_time)) {
-                return false;
-            }
+                        $isLiveDeclared = $now->lessThanOrEqualTo($expireTime);
+                    } catch (\Exception $e) {
+                        $isLiveDeclared = false;
+                    }
+                }
 
-            try {
-                $gameDateTime = \Carbon\Carbon::parse(
-                    $now->format('Y-m-d') . ' ' . trim($game->result_time),
-                    'Asia/Kolkata'
-                );
+                $game->is_live_declared = $isLiveDeclared;
 
-                return $gameDateTime->greaterThanOrEqualTo($now);
-            } catch (\Exception $e) {
-                return false;
-            }
-        })
-        ->sortBy(function ($game) use ($now) {
-            return \Carbon\Carbon::parse(
-                $now->format('Y-m-d') . ' ' . trim($game->result_time),
-                'Asia/Kolkata'
-            )->timestamp;
-        })
-        ->values();
+                return $game;
+            });
 
-    /*
-    |--------------------------------------------------------------------------
-    | 3. Final display
-    | Pehle declared result top me, fir upcoming games
-    | Total only 4
-    |--------------------------------------------------------------------------
-    */
-    $liveGames = $declaredGames
-        ->concat($normalGames)
-        ->take(4)
-        ->values();
+            $declaredGames = $preparedGames
+                ->filter(fn ($game) => $game->is_live_declared === true)
+                ->sortByDesc(function ($game) {
+                    return \Carbon\Carbon::parse($game->todayResult->updated_at, 'Asia/Kolkata')->timestamp;
+                })
+                ->values();
 
-    $nextGame = $normalGames->first();
-@endphp
+            $normalGames = $preparedGames
+                ->reject(fn ($game) => $game->is_live_declared === true)
+                ->filter(function ($game) use ($now) {
+                    if (empty($game->result_time)) {
+                        return false;
+                    }
+
+                    try {
+                        $gameDateTime = \Carbon\Carbon::parse(
+                            $now->format('Y-m-d') . ' ' . trim($game->result_time),
+                            'Asia/Kolkata'
+                        );
+
+                        return $gameDateTime->greaterThanOrEqualTo($now);
+                    } catch (\Exception $e) {
+                        return false;
+                    }
+                })
+                ->sortBy(function ($game) use ($now) {
+                    return \Carbon\Carbon::parse(
+                        $now->format('Y-m-d') . ' ' . trim($game->result_time),
+                        'Asia/Kolkata'
+                    )->timestamp;
+                })
+                ->values();
+
+            $liveGames = $declaredGames
+                ->concat($normalGames)
+                ->take(4)
+                ->values();
+
+            $nextGame = $normalGames->first();
+        @endphp
 
         <div class="livegame">
             <p style="margin:0; text-transform:uppercase;">
@@ -139,11 +128,7 @@
             </div>
 
             <div class="open">
-                @if(
-                    !empty($game->todayResult)
-                    && ($game->todayResult->status ?? null) === 'declared'
-                    && !empty($game->todayResult->result)
-                )
+                @if(!empty($game->is_live_declared) && $game->is_live_declared === true)
                     <p style="margin:0; text-transform:uppercase;">
                         {{ is_numeric($game->todayResult->result) && $game->todayResult->result <= 9
                             ? str_pad($game->todayResult->result, 2, '0', STR_PAD_LEFT)

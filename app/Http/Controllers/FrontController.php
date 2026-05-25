@@ -20,11 +20,11 @@ class FrontController extends Controller
         $today = Carbon::today('Asia/Kolkata');
         $yesterday = Carbon::yesterday('Asia/Kolkata');
 
-        $liveResponse = Http::timeout(10)->get($this->apiBaseUrl . '/live-results');
-        $todayResponse = Http::timeout(10)->get($this->apiBaseUrl . '/games-results', [
+        $liveResponse = Http::timeout(10)->get($this->apiBaseUrl . '/api/live-results');
+        $todayResponse = Http::timeout(10)->get($this->apiBaseUrl . '/api/games-results', [
             'date' => $today->format('Y-m-d'),
         ]);
-        $yesterdayResponse = Http::timeout(10)->get($this->apiBaseUrl . '/games-results', [
+        $yesterdayResponse = Http::timeout(10)->get($this->apiBaseUrl . '/api/games-results', [
             'date' => $yesterday->format('Y-m-d'),
         ]);
 
@@ -76,7 +76,7 @@ class FrontController extends Controller
         $monthlyResults = collect();
 
         foreach ($dates as $date) {
-            $response = Http::timeout(10)->get($this->apiBaseUrl . '/games-results', [
+            $response = Http::timeout(10)->get($this->apiBaseUrl . '/api/games-results', [
                 'date' => $date->format('Y-m-d'),
             ]);
 
@@ -107,7 +107,7 @@ class FrontController extends Controller
 
     public function chart()
 {
-    $response = Http::timeout(10)->get($this->apiBaseUrl . '/chart-games');
+    $response = Http::timeout(10)->get($this->apiBaseUrl . '/api/chart-games');
 
     $games = $response->successful()
         ? collect($response->json('games', []))->map(function ($game) {
@@ -137,7 +137,7 @@ public function gameRecord(string $slug)
 
 public function yearRecord(string $slug, int $year)
 {
-    $response = Http::timeout(10)->get($this->apiBaseUrl . "/game-year-record/{$slug}/{$year}");
+    $response = Http::timeout(10)->get($this->apiBaseUrl . "/api/game-year-record/{$slug}/{$year}");
 
     if ($response->successful()) {
         $apiData = $response->json();
