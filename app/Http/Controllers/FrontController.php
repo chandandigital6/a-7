@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SeoPage;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -197,11 +198,13 @@ class FrontController extends Controller
         }
     }
 
+     $seo = SeoPage::where('page_key', 'home')->first();
     return view('front.home.index', compact(
         'games',
         'chartGames',
         'dates',
-        'monthlyResults'
+        'monthlyResults',
+        'seo'
     ));
 }
 
@@ -253,7 +256,7 @@ public function chart()
         $games = collect();
     }
 
-    $seo = null;
+   $seo = SeoPage::where('page_key', 'chart')->first();
 
     return view('front.chart.index', compact('games', 'seo'));
 }
@@ -316,7 +319,7 @@ public function yearRecord(string $slug, int $year)
         $results = collect();
     }
 
-    $seo = null;
+     $seo = SeoPage::where('page_key', 'game-year-record')->first();
 
     return view('front.game.year_record', compact('game', 'results', 'year', 'seo'));
 }
@@ -324,16 +327,19 @@ public function yearRecord(string $slug, int $year)
 
     public function contactUs()
     {
-        return view('front.contact-us.index');
+         $seo = SeoPage::where('page_key', 'contact-us')->first();
+        return view('front.contact-us.index', compact('seo'));
     }
 
     public function privacyPolicy()
     {
-        return view('front.privacy-policy.index');
+        $seo = SeoPage::where('page_key', 'privacy-policy')->first();
+        return view('front.privacy-policy.index', compact('seo'));
     }
 
     public function termsConditions()
     {
-        return view('front.terms-conditions.index');
+         $seo = SeoPage::where('page_key', 'terms-conditions')->first();
+        return view('front.terms-conditions.index', compact('seo'));
     }
 }

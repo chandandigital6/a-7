@@ -4,39 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <title>A7 Satta King Result Today 2026 | A7 SattaFast Live Result Chart</title>
-
-<meta name="description" content="A7 SattaFast par daily live result, satta king chart, record chart aur yearly result chart fast update ke saath dekhein.">
-<meta name="keywords" content="a7 satta, a7 satta king, a7 satta result, a7 satta fast, satta king result, satta chart, gali result, disawar result, faridabad result, ghaziabad result">
-<meta name="author" content="A7-SATTAFAST">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="{{ url()->current() }}">
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="A7 Satta King Result Today 2026 | A7 SattaFast">
-<meta property="og:description" content="A7 SattaFast par live result, record chart aur yearly satta chart dekhein.">
-<meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:image" content="{{ url('A1.png') }}">
-<meta property="og:site_name" content="A7-SATTAFAST">
-
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="A7 Satta King Result Today 2026">
-<meta name="twitter:description" content="Fast live result and record chart on A7 SattaFast.">
-<meta name="twitter:image" content="{{ url('A1.png') }}">
-
 @php
+    $siteName = 'A7-SATTAFAST';
+
+    $metaTitle = $seo->meta_title
+        ?? 'A7 Satta King Result Today 2026 | A7 SattaFast Live Result Chart';
+
+    $metaDescription = $seo->meta_description
+        ?? 'A7 SattaFast par daily live result, satta king chart, record chart aur yearly result chart fast update ke saath dekhein.';
+
+    $metaKeywords = $seo->meta_keywords
+        ?? 'a7 satta, a7 satta king, a7 satta result, a7 satta fast, satta king result, satta chart, gali result, disawar result, faridabad result, ghaziabad result';
+
+    $canonicalUrl = $seo->canonical_url ?? url()->current();
+
+    $ogTitle = $seo->og_title ?? $metaTitle;
+    $ogDescription = $seo->og_description ?? $metaDescription;
+
+    $ogImage = !empty($seo->og_image)
+        ? asset($seo->og_image)
+        : url('A1.png');
+
     $schema = [
         '@context' => 'https://schema.org',
         '@type' => 'WebSite',
-        'name' => 'A7-SATTAFAST',
+        'name' => $siteName,
         'url' => url('/'),
-        'description' => 'A7 SattaFast live result and record chart website.',
+        'description' => $metaDescription,
     ];
 @endphp
+
+<title>{{ $metaTitle }}</title>
+
+<meta name="description" content="{{ $metaDescription }}">
+<meta name="keywords" content="{{ $metaKeywords }}">
+<meta name="author" content="{{ $siteName }}">
+<meta name="robots" content="index, follow">
+
+<link rel="canonical" href="{{ $canonicalUrl }}">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ $ogTitle }}">
+<meta property="og:description" content="{{ $ogDescription }}">
+<meta property="og:url" content="{{ $canonicalUrl }}">
+<meta property="og:image" content="{{ $ogImage }}">
+<meta property="og:site_name" content="{{ $siteName }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $ogTitle }}">
+<meta name="twitter:description" content="{{ $ogDescription }}">
+<meta name="twitter:image" content="{{ $ogImage }}">
 
 <script type="application/ld+json">
 {!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
 </script>
+
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/style.css') }}">
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/background.css') }}">
