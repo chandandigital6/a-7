@@ -101,10 +101,27 @@
     </div>
 </div>
 
-<div class="addb" style="background:#fff; padding:20px; margin-top:10px; text-align:center; border:2px solid #000;">
-    <h3>ADVERTISEMENT SECTION</h3>
-</div>
+<div class="addb" style="background:#e9e9e9; padding:20px; margin-top:10px; text-align:center; border:2px solid #00008b; border-radius:15px;">
 
+    <h2 style="margin:0; font-size:22px; font-weight:bold;">
+        नमस्कार साथियों
+    </h2>
+
+    <p style="margin-top:10px; font-size:20px; font-weight:600; line-height:1.6;">
+        सीधा कंपनी खाईवाल के पास गेम प्ले करे
+        बिंदास 1001% पेमेंट की गारंटी के साथ
+        आपका अपना भाई
+    </p>
+
+    <h2 style="margin-top:25px; font-size:28px; font-weight:bold;">
+        S.K Bhai
+    </h2>
+
+    <img src="{{ asset('Wp.png') }}"
+         alt="S.K Bhai"
+         style="margin-top:10px; max-width:120px; height:auto;">
+
+</div>
 <style>
     .loading {
         border-radius: 50%;

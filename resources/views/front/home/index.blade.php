@@ -25,12 +25,13 @@
         </h4>
 
         <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T">
-            <img src="{{ asset('public/Join-WhatsApp.png') }}"
+            <img src="{{ asset('Join-WhatsApp.png') }}"
                  width="160px"
                  style="display:block; margin-bottom:10px; margin-left:auto; margin-right:auto;">
         </a>
     </div>
 </div>
+
 
 <div class="drag">
     <h2>
@@ -38,9 +39,64 @@
             A7-SATTAFAST RECORD CHART
         </span>
         <br>
-        <a href="/"><span>A7-SATTAFAST LIVE RESULT</span></a>
+
+        <a href="/">
+            <span>A7-SATTAFAST LIVE RESULT</span>
+        </a>
+
+        <div style="background:#fff; padding:10px 15px; margin-top:8px; text-align:center; border:3px solid #0000cc; border-radius:12px; font-family:Arial, sans-serif;">
+
+            <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
+                सीधे सट्टा कंपनी का No 1 खाईवाल
+            </div>
+
+            <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
+                ☆☆ ABHISHEK Bhai KHAIWAL☆☆
+            </div>
+
+            <div style="font-size:23px; font-weight:700; color:#111; line-height:1.35;">
+                🎯 पालिका बाजार..1:20pm<br>
+                🎯 प्रयागराज........2:00pm<br>
+                🎯 दिल्लीबाजार ...3:00pm<br>
+                🎯 दिल्ली दरबार....3:30pm<br>
+                🎯 श्री गणेश........4:30 Pm<br>
+                🎯 रूप नगर..........5:10pm<br>
+                🎯 फरीदाबाद.......5:50 pm<br>
+                🎯 फतेहपुर..........7:10 pm<br>
+                🎯 गाजियाबाद......8:50 pm<br>
+                🎯 नोएडानाईट.....10:00 pm<br>
+                🎯 गली...............11:15pm<br>
+                🎯 दिसावर ..........3:00 am
+            </div>
+
+            <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
+                जोड़ी रेट<br>
+                जोड़ी रेट 10-------960<br>
+                हरफ रेट 100-----960
+            </div>
+
+            <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
+                ☆☆ ABHISHEK Bhai KHAIWAL ☆☆
+            </div>
+
+            <div style="font-size:22px; font-weight:800; color:#9b59b6;">
+                Game Play करने के लिए नीचे लिंक पर क्लिक करे
+            </div>
+
+            <img src="{{ asset('images/abhishek-bhai.png') }}"
+                 alt="ABHISHEK Bhai"
+                 style="margin-top:8px; max-width:120px; height:auto;">
+
+            <div style="font-size:22px; font-weight:800; color:#111; margin-top:6px;">
+                Click to chat
+            </div>
+
+        </div>
     </h2>
 </div>
+
+
+
 
 <div class="resultchart" style="background-color:#fff;">
     <div class="addb">
@@ -121,15 +177,108 @@
     </div>
 </div>
 
+
+
+
+<style>
+    .khaiwalbox2-box {
+        width: 100%;
+        background: linear-gradient(90deg, #6b0030 0%, #b00058 100%);
+        color: #ffffff;
+        text-align: center;
+        padding: 25px 15px;
+        border-radius: 0 0 12px 12px;
+        font-family: Arial, sans-serif;
+        font-weight: 700;
+    }
+
+    .khaiwalbox2-box h2,
+    .khaiwalbox2-box h3,
+    .khaiwalbox2-box p {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .khaiwalbox2-box h3 {
+        font-size: 22px;
+        margin: 4px 0;
+        color: #fff;
+    }
+
+    .khaiwalbox2-box h2 {
+        font-size: 24px;
+        margin: 6px 0;
+        color: #d26a32;
+    }
+
+    .khaiwalbox2-box p {
+        font-size: 22px;
+        line-height: 1.35;
+        margin: 5px auto;
+        display: inline-block;
+        text-align: left;
+    }
+
+    .khaiwalbox2-box .purple-text {
+        color: #b970d5;
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .khaiwalbox2-box img {
+        display: block;
+        margin: 5px auto;
+        max-width: 225px;
+        height: 78px;
+        border: 1px solid #fff;
+    }
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm">
             <div class="khaiwalbox2-box">
-                TOP ADVERTISEMENT SECTION
+
+                <h3>सीधे सट्टा कंपनी का No 1 खाईवाल</h3>
+
+                <h2>☆☆ ABHISHEK Bhai KHAIWAL☆☆</h2>
+
+                <p>
+                    🎯 पालिका बाजार.1:20pm<br>
+                    🎯 प्रयागराज........2:00pm<br>
+                    🎯 दिल्लीबाजार ...3:00pm<br>
+                    🎯 श्री गणेश.........4:0 Pm<br>
+                    🎯 रूप नगर..........5:10pm<br>
+                    🎯 फरीदाबाद.......5:50 pm<br>
+                    🎯 फतेहपुर..........7:10 pm<br>
+                    🎯 गाजियाबाद......8:50 pm<br>
+                    🎯 नोएडानाईट.....10:00 pm<br>
+                    🎯 गली...............11:15pm<br>
+                    🎯 दिसावर ..........3:00 am
+                </p>
+
+                <h3>
+                    जोड़ी रेट<br>
+                    जोड़ी रेट 10-------960<br>
+                    हरफ रेट 100-----960
+                </h3>
+
+                <h2>☆☆ ABHISHEK Bhai KHAIWAL ☆☆</h2>
+
+                <h3 class="purple-text">Game Play करने के लिये नीचे लिंक पर क्लिक करे</h3>
+
+                <a href="https://wa.me/91XXXXXXXXXX" target="_blank">
+                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
+                </a>
+
+                <h3>Click to chat</h3>
+
             </div>
         </div>
     </div>
 </div>
+
 
 <br>
 
