@@ -16,97 +16,7 @@ class FrontController extends Controller
         $this->apiBaseUrl = rtrim(config('services.main_api.url'), '/');
     }
 
-    public function homeold()
-    {
-        $today = Carbon::today('Asia/Kolkata');
-        $yesterday = Carbon::yesterday('Asia/Kolkata');
-
-        $liveResponse = Http::timeout(10)->get($this->apiBaseUrl . '/api/live-results');
-        $todayResponse = Http::timeout(10)->get($this->apiBaseUrl . '/api/games-results', [
-            'date' => $today->format('Y-m-d'),
-        ]);
-        $yesterdayResponse = Http::timeout(10)->get($this->apiBaseUrl . '/api/games-results', [
-            'date' => $yesterday->format('Y-m-d'),
-        ]);
-
-        $liveGames = $liveResponse->successful()
-            ? collect($liveResponse->json('games', []))
-            : collect();
-
-        $todayGames = $todayResponse->successful()
-            ? collect($todayResponse->json('games', []))
-            : collect();
-
-        $yesterdayGames = $yesterdayResponse->successful()
-            ? collect($yesterdayResponse->json('games', []))->keyBy('slug')
-            : collect();
-
-        $games = $todayGames->map(function ($game) use ($yesterdayGames) {
-            $yesterdayGame = $yesterdayGames->get($game['slug']);
-
-            return (object) [
-                'id' => $game['id'],
-                'name' => $game['name'],
-                'slug' => $game['slug'],
-                'result_time' => $game['result_time'],
-                'sort_order' => $game['sort_order'] ?? 0,
-
-                'todayResult' => (object) [
-                    'result' => $game['result']['result'] ?? null,
-                    'status' => $game['result']['status'] ?? 'waiting',
-                ],
-
-                'yesterdayResult' => (object) [
-                    'result' => $yesterdayGame['result']['result'] ?? null,
-                    'status' => $yesterdayGame['result']['status'] ?? 'waiting',
-                ],
-
-                'latestResult' => (object) [
-                    'result' => $game['result']['result'] ?? null,
-                    'status' => $game['result']['status'] ?? 'waiting',
-                ],
-            ];
-        });
-
-        $chartGames = $games;
-
-        $startDate = $today->copy()->startOfMonth();
-        $endDate = $today->copy()->endOfMonth();
-        $dates = CarbonPeriod::create($startDate, $endDate);
-
-        $monthlyResults = collect();
-
-        foreach ($dates as $date) {
-            $response = Http::timeout(10)->get($this->apiBaseUrl . '/api/games-results', [
-                'date' => $date->format('Y-m-d'),
-            ]);
-
-            if ($response->successful()) {
-                $monthlyResults->put(
-                    $date->format('Y-m-d'),
-                    collect($response->json('games', []))->map(function ($game) {
-                        return (object) [
-                            'game_id' => $game['id'],
-                            'game_slug' => $game['slug'],
-                            'result_date' => $game['result']['result_date'] ?? null,
-                            'result' => $game['result']['result'] ?? null,
-                            'status' => $game['result']['status'] ?? 'waiting',
-                        ];
-                    })
-                );
-            }
-        }
-
-        return view('front.home.index', compact(
-            'games',
-            'chartGames',
-            'dates',
-            'monthlyResults'
-        ));
-    }
-
-
-
+ 
 
     public function home()
 {
@@ -135,6 +45,8 @@ class FrontController extends Controller
         $todayResult = $game['result'] ?? [];
         $yesterdayResult = $yesterdayGame['result'] ?? [];
 
+
+        
         return (object) [
             'id'          => $game['id'] ?? null,
             'name'        => $game['name'] ?? '',

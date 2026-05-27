@@ -26,14 +26,13 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-   public function boot(): void
+public function boot(): void
 {
     $this->configureDefaults();
 
     View::composer('front.layouts.header', function ($view) {
 
         $apiBaseUrl = rtrim(config('services.main_api.url'), '/');
-        $today = Carbon::today('Asia/Kolkata')->format('Y-m-d');
 
         $headerGames = collect();
 
@@ -42,40 +41,41 @@ class AppServiceProvider extends ServiceProvider
                 throw new \Exception('MAIN_API_URL empty hai');
             }
 
-            $apiUrl = $apiBaseUrl . '/api/games-results';
+            $apiUrl = $apiBaseUrl . '/api/home-live-results';
 
             $response = Http::timeout(10)->get($apiUrl, [
-                'date' => $today,
+                'limit' => 4,
             ]);
 
-            \Log::info('Header games API response', [
+            \Log::info('Header home-live-results API response', [
                 'url' => $apiUrl,
                 'status' => $response->status(),
                 'body' => $response->body(),
             ]);
 
-            if ($response->successful()) {
+            if ($response->successful() && $response->json('success') == true) {
                 $headerGames = collect($response->json('games', []))
                     ->map(function ($game) {
 
                         $result = $game['result'] ?? [];
 
                         return (object) [
-                            'id' => $game['id'] ?? null,
-                            'name' => $game['name'] ?? '',
-                            'slug' => $game['slug'] ?? '',
+                            'id'          => $game['id'] ?? null,
+                            'name'        => $game['name'] ?? '',
+                            'slug'        => $game['slug'] ?? '',
                             'result_time' => $game['result_time'] ?? null,
-                            'sort_order' => $game['sort_order'] ?? 0,
+                            'sort_order'  => $game['sort_order'] ?? 0,
 
                             'todayResult' => (object) [
-                                'id' => $result['id'] ?? null,
-                                'result_date' => $result['result_date'] ?? null,
-                                'result' => $result['result'] ?? null,
-                                'status' => $result['status'] ?? 'waiting',
+                                'id'           => $result['id'] ?? null,
+                                'result_date'  => $result['result_date'] ?? null,
+                                'result'       => $result['result'] ?? null,
+                                'status'       => $result['status'] ?? 'waiting',
                                 'show_minutes' => !empty($result['show_minutes'])
                                     ? (int) $result['show_minutes']
                                     : 10,
-                                'updated_at' => $result['updated_at'] ?? null,
+                                'updated_at'   => $result['updated_at'] ?? null,
+                                'is_live'      => $result['is_live'] ?? false,
                             ],
                         ];
                     })
@@ -83,8 +83,8 @@ class AppServiceProvider extends ServiceProvider
             }
 
         } catch (\Throwable $e) {
-            \Log::error('Header API Error', [
-                'url' => ($apiBaseUrl ?? '') . '/api/games-results',
+            \Log::error('Header home-live-results API Error', [
+                'url' => ($apiBaseUrl ?? '') . '/api/home-live-results',
                 'error' => $e->getMessage(),
             ]);
 
