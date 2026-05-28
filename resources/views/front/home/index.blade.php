@@ -83,7 +83,7 @@
                 Game Play करने के लिए नीचे लिंक पर क्लिक करे
             </div>
 
-            <img src="{{ asset('images/abhishek-bhai.png') }}"
+            <img src="{{ asset('whatsAppChat.png') }}"
                  alt="ABHISHEK Bhai"
                  style="margin-top:8px; max-width:120px; height:auto;">
 
