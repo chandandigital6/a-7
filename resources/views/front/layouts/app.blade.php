@@ -25,13 +25,7 @@
         ? asset($seo->og_image)
         : url('A1.png');
 
-    $schema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'WebSite',
-        'name' => $siteName,
-        'url' => url('/'),
-        'description' => $metaDescription,
-    ];
+  
 @endphp
 
 <title>{{ $metaTitle }}</title>
@@ -55,9 +49,9 @@
 <meta name="twitter:description" content="{{ $ogDescription }}">
 <meta name="twitter:image" content="{{ $ogImage }}">
 
-<script type="application/ld+json">
-{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
-</script>
+@if(!empty($seo?->schema_markup))
+    {!! $seo->schema_markup !!}
+@endif
 
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/style.css') }}">
