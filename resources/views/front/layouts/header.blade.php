@@ -50,7 +50,7 @@
 
         <div class="livegame">
             <p style="margin:0; text-transform:uppercase;">
-                NEXT GAME : {{ $nextGame ? strtoupper($nextGame->name) : 'NA' }}
+                {{-- NEXT GAME : {{ $nextGame ? strtoupper($nextGame->name) : 'NA' }} --}}
             </p>
         </div>
 

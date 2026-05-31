@@ -24,20 +24,20 @@
                 </flux:sidebar.item>
 
                 {{-- Games --}}
-                <flux:sidebar.item icon="squares-2x2" :href="route('games.index')"
+                {{-- <flux:sidebar.item icon="squares-2x2" :href="route('games.index')"
                     :current="request()->routeIs('games.*')" wire:navigate>
                     {{ __('Games') }}
-                </flux:sidebar.item>
+                </flux:sidebar.item> --}}
 
-                <flux:sidebar.item icon="chart-bar-square" :href="route('game-results.index')"
+                {{-- <flux:sidebar.item icon="chart-bar-square" :href="route('game-results.index')"
                     :current="request()->routeIs('game-results.*')" wire:navigate>
                     {{ __('Game Results') }}
-                </flux:sidebar.item>
+                </flux:sidebar.item> --}}
 
-                <flux:sidebar.item icon="calendar-days" :href="route('chart-years.index')"
+                {{-- <flux:sidebar.item icon="calendar-days" :href="route('chart-years.index')"
                     :current="request()->routeIs('chart-years.*')" wire:navigate>
                     {{ __('Chart Years') }}
-                </flux:sidebar.item>
+                </flux:sidebar.item> --}}
 
 
                 <flux:sidebar.item icon="megaphone" :href="route('advertisements.index')"
@@ -51,10 +51,10 @@
                     {{ __('Notices') }}
                 </flux:sidebar.item>
 
-                <flux:sidebar.item icon="document-text" :href="route('content-blocks.index')"
+                {{-- <flux:sidebar.item icon="document-text" :href="route('content-blocks.index')"
                     :current="request()->routeIs('content-blocks.*')" wire:navigate>
                     {{ __('Content Blocks') }}
-                </flux:sidebar.item>
+                </flux:sidebar.item> --}}
 
                 <flux:sidebar.item icon="globe-alt" :href="route('seo-pages.index')"
                     :current="request()->routeIs('seo-pages.*')" wire:navigate>
