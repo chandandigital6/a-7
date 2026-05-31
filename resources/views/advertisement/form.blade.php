@@ -119,20 +119,20 @@
 
                 </div>
 
-                <div>
-                    <label class="mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">
-                        Content
-                    </label>
+               <div>
+    <label class="mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">
+        Content
+    </label>
 
-                    <textarea name="content"
-                              rows="6"
-                              placeholder="Enter advertisement content or HTML"
-                              class="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm outline-none focus:border-black dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">{{ old('content', $advertisement->content ?? '') }}</textarea>
+    <textarea id="contentEditor"
+              name="content"
+              rows="10"
+              class="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm outline-none focus:border-black dark:border-neutral-700 dark:bg-neutral-800 dark:text-white">{{ old('content', $advertisement->content ?? '') }}</textarea>
 
-                    @error('content')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+    @error('content')
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>
 
                 <div class="flex items-center gap-3">
                     <input type="checkbox"
@@ -166,5 +166,19 @@
         </div>
 
     </div>
+
+
+
+
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+
+<script>
+ClassicEditor
+    .create(document.querySelector('#contentEditor'))
+    .catch(error => {
+        console.error(error);
+    });
+</script>
+
 
 </x-layouts::app>
