@@ -602,74 +602,7 @@
     @endif
 @endforeach
 
-    {{-- GAME YEAR RECORD CHART SECTION --}}
-    <div style="background:#000; padding-bottom:25px;">
 
-        @forelse($chartGames as $game)
-            <div
-                style="
-            background:#f5004f;
-            color:#fff;
-            text-align:center;
-            font-size:26px;
-            font-weight:bold;
-            padding:14px 5px;
-            border-top:3px solid #fff;
-            border-bottom:3px solid #fff;
-            text-transform:uppercase;
-        ">
-                SATTA RECORD CHART
-            </div>
-
-            <div
-                style="
-            background:#fff;
-            border:2px solid blue;
-            border-radius:18px;
-            margin:0 0 30px 0;
-            text-align:center;
-            padding:10px;
-            font-size:24px;
-            color:#000;
-        ">
-                <a href="{{ url('record/' . $game->slug) }}" style="color:#000; text-decoration:none;">
-                    SATTA RECORD CHART {{ $game->name }}
-                </a>
-            </div>
-
-            @php
-                $years = [
-                    now('Asia/Kolkata')->year,
-                    now('Asia/Kolkata')->copy()->subYear()->year,
-                    now('Asia/Kolkata')->copy()->subYears(2)->year,
-                ];
-            @endphp
-
-            @foreach ($years as $year)
-                <div
-                    style="
-                background:#fff;
-                border:2px solid blue;
-                border-radius:18px;
-                margin:0 0 30px 0;
-                text-align:center;
-                padding:10px;
-                font-size:24px;
-                color:#000;
-            ">
-                    <a href="{{ url('record/' . $game->slug . '/' . $year) }}" style="color:#000; text-decoration:none;">
-                        SATTA RECORD CHART {{ $year }}
-                    </a>
-                </div>
-            @endforeach
-
-        @empty
-            <div style="background:#fff; padding:20px; text-align:center;">
-                No record chart found.
-            </div>
-        @endforelse
-
-    </div>
 
 
 
@@ -1032,6 +965,81 @@
 
         </div>
     </section>
+
+
+
+
+
+    {{-- GAME YEAR RECORD CHART SECTION --}}
+    <div style="background:#000; padding-bottom:25px;">
+
+        @forelse($chartGames as $game)
+            <div
+                style="
+            background:#f5004f;
+            color:#fff;
+            text-align:center;
+            font-size:26px;
+            font-weight:bold;
+            padding:14px 5px;
+            border-top:3px solid #fff;
+            border-bottom:3px solid #fff;
+            text-transform:uppercase;
+        ">
+                SATTA RECORD CHART
+            </div>
+
+            <div
+                style="
+            background:#fff;
+            border:2px solid blue;
+            border-radius:18px;
+            margin:0 0 30px 0;
+            text-align:center;
+            padding:10px;
+            font-size:24px;
+            color:#000;
+        ">
+                <a href="{{ url('record/' . $game->slug) }}" style="color:#000; text-decoration:none;">
+                    SATTA RECORD CHART {{ $game->name }}
+                </a>
+            </div>
+
+            @php
+                $years = [
+                    now('Asia/Kolkata')->year,
+                    now('Asia/Kolkata')->copy()->subYear()->year,
+                    now('Asia/Kolkata')->copy()->subYears(2)->year,
+                ];
+            @endphp
+
+            @foreach ($years as $year)
+                <div
+                    style="
+                background:#fff;
+                border:2px solid blue;
+                border-radius:18px;
+                margin:0 0 30px 0;
+                text-align:center;
+                padding:10px;
+                font-size:24px;
+                color:#000;
+            ">
+                    <a href="{{ url('record/' . $game->slug . '/' . $year) }}" style="color:#000; text-decoration:none;">
+                        SATTA RECORD CHART {{ $year }}
+                    </a>
+                </div>
+            @endforeach
+
+        @empty
+            <div style="background:#fff; padding:20px; text-align:center;">
+                No record chart found.
+            </div>
+        @endforelse
+
+    </div>
+
+
 
 
 
