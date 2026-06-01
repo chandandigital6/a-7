@@ -139,7 +139,8 @@
                 <br>
 
                 <font class="time_result">
-                    ( {{ $game->result_time }} )<br>
+                    {{-- ( {{ $game->result_time }} )<br> --}}
+                      {{ \Carbon\Carbon::parse($game->result_time)->format('h:i A') }} <br>
 
                     <font class="kal">कल &nbsp;&nbsp; आज</font> <br>
 
