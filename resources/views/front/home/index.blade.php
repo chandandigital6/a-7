@@ -20,81 +20,90 @@
   
 
 
-{{-- Sidebar Advertisement --}}
+
+
+
+{{-- Middle Advertisement --}}
 @php
-    $sidebarAdvertisement = \App\Models\Advertisement::where('is_active', true)
-        ->where('position', 'sidebar')
+    $middleAdvertisement = \App\Models\Advertisement::where('is_active', true)
+        ->where('position', 'middle')
         ->latest()
         ->first();
 @endphp
 
-@if ($sidebarAdvertisement)
-    <section class="rv-ad-wrap">
-        <div class="rv-ad-box">
-            @if ($sidebarAdvertisement->content)
+<div class="drag">
+    <h2 class="rv-result-title">
+        <a href="/">
+            <span>A7-SATTAFAST LIVE RESULT</span>
+        </a>
+    </h2>
+
+    @if ($middleAdvertisement)
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box">
+                @if ($middleAdvertisement->content)
+                    <div>
+                        {!! $middleAdvertisement->content !!}
+                    </div>
+                @elseif($middleAdvertisement->title)
+                    <div class="rv-ad-name">
+                        {{ $middleAdvertisement->title }}
+                    </div>
+                @endif
+
+                @if ($middleAdvertisement->image)
+                    <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                        <span class="rv-ad-img">
+                            <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
+                                 alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}">
+                        </span>
+                    </a>
+                @endif
+            </div>
+        </section>
+    @else
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box">
+                <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
+
+                <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+
                 <div>
-                    {!! $sidebarAdvertisement->content !!}
+                    🎯 पालिका बाजार..1:20pm<br>
+                    🎯 प्रयागराज........2:00pm<br>
+                    🎯 दिल्लीबाजार ...3:00pm<br>
+                    🎯 दिल्ली दरबार....3:30pm<br>
+                    🎯 श्री गणेश........4:30 Pm<br>
+                    🎯 रूप नगर..........5:10pm<br>
+                    🎯 फरीदाबाद.......5:50 pm<br>
+                    🎯 फतेहपुर..........7:10 pm<br>
+                    🎯 गाजियाबाद......8:50 pm<br>
+                    🎯 नोएडानाईट.....10:00 pm<br>
+                    🎯 गली...............11:15pm<br>
+                    🎯 दिसावर ..........3:00 am
                 </div>
-            @elseif($sidebarAdvertisement->title)
-                <h2 class="rv-ad-name">{{ $sidebarAdvertisement->title }}</h2>
-            @endif
 
-            @if ($sidebarAdvertisement->image)
-                <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
-                    <span class="rv-ad-img">
-                        <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
-                             alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}">
-                    </span>
-                </a>
-            @endif
-        </div>
-    </section>
-@else
-    <section class="rv-ad-wrap">
-        <div class="rv-ad-box">
-            <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
+                <div>
+                    जोड़ी रेट<br>
+                    जोड़ी रेट 10-------960<br>
+                    हरफ रेट 100-----960
+                </div>
 
-            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+                <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
-            <div>
-                🎯 पालिका बाजार.1:20pm<br>
-                🎯 प्रयागराज........2:00pm<br>
-                🎯 दिल्लीबाजार ...3:00pm<br>
-                🎯 श्री गणेश.........4:0 Pm<br>
-                🎯 रूप नगर..........5:10pm<br>
-                🎯 फरीदाबाद.......5:50 pm<br>
-                🎯 फतेहपुर..........7:10 pm<br>
-                🎯 गाजियाबाद......8:50 pm<br>
-                🎯 नोएडानाईट.....10:00 pm<br>
-                🎯 गली...............11:15pm<br>
-                🎯 दिसावर ..........3:00 am
-            </div>
+                <div class="rv-ad-purple">
+                    Game Play करने के लिए नीचे लिंक पर क्लिक करे
+                </div>
 
-            <div>
-                जोड़ी रेट<br>
-                जोड़ी रेट 10-------960<br>
-                हरफ रेट 100-----960
-            </div>
-
-            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
-
-            <div class="rv-ad-purple">
-                Game Play करने के लिये नीचे लिंक पर क्लिक करे
-            </div>
-
-            <a href="https://wa.me/919896916793" target="_blank" style="text-decoration:none;">
                 <span class="rv-ad-img">
-                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
+                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai">
                 </span>
-            </a>
 
-            <div>Click to chat</div>
-        </div>
-    </section>
-@endif
-
-
-
+                <div>Click to chat</div>
+            </div>
+        </section>
+    @endif
+</div>
 
 {{-- Bottom Advertisement --}}
 @php
@@ -224,89 +233,81 @@
     {{-- game resuld --}}
 
 
- 
-
-    {{-- Middle Advertisement --}}
+ {{-- Sidebar Advertisement --}}
 @php
-    $middleAdvertisement = \App\Models\Advertisement::where('is_active', true)
-        ->where('position', 'middle')
+    $sidebarAdvertisement = \App\Models\Advertisement::where('is_active', true)
+        ->where('position', 'sidebar')
         ->latest()
         ->first();
 @endphp
 
-<div class="drag">
-    <h2 class="rv-result-title">
-        <a href="/">
-            <span>A7-SATTAFAST LIVE RESULT</span>
-        </a>
-    </h2>
+@if ($sidebarAdvertisement)
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box">
+            @if ($sidebarAdvertisement->content)
+                <div>
+                    {!! $sidebarAdvertisement->content !!}
+                </div>
+            @elseif($sidebarAdvertisement->title)
+                <h2 class="rv-ad-name">{{ $sidebarAdvertisement->title }}</h2>
+            @endif
 
-    @if ($middleAdvertisement)
-        <section class="rv-ad-wrap">
-            <div class="rv-ad-box">
-                @if ($middleAdvertisement->content)
-                    <div>
-                        {!! $middleAdvertisement->content !!}
-                    </div>
-                @elseif($middleAdvertisement->title)
-                    <div class="rv-ad-name">
-                        {{ $middleAdvertisement->title }}
-                    </div>
-                @endif
+            @if ($sidebarAdvertisement->image)
+                <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
+                             alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}">
+                    </span>
+                </a>
+            @endif
+        </div>
+    </section>
+@else
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box">
+            <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
 
-                @if ($middleAdvertisement->image)
-                    <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
-                        <span class="rv-ad-img">
-                            <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
-                                 alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}">
-                        </span>
-                    </a>
-                @endif
+            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+
+            <div>
+                🎯 पालिका बाजार.1:20pm<br>
+                🎯 प्रयागराज........2:00pm<br>
+                🎯 दिल्लीबाजार ...3:00pm<br>
+                🎯 श्री गणेश.........4:0 Pm<br>
+                🎯 रूप नगर..........5:10pm<br>
+                🎯 फरीदाबाद.......5:50 pm<br>
+                🎯 फतेहपुर..........7:10 pm<br>
+                🎯 गाजियाबाद......8:50 pm<br>
+                🎯 नोएडानाईट.....10:00 pm<br>
+                🎯 गली...............11:15pm<br>
+                🎯 दिसावर ..........3:00 am
             </div>
-        </section>
-    @else
-        <section class="rv-ad-wrap">
-            <div class="rv-ad-box">
-                <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
 
-                <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+            <div>
+                जोड़ी रेट<br>
+                जोड़ी रेट 10-------960<br>
+                हरफ रेट 100-----960
+            </div>
 
-                <div>
-                    🎯 पालिका बाजार..1:20pm<br>
-                    🎯 प्रयागराज........2:00pm<br>
-                    🎯 दिल्लीबाजार ...3:00pm<br>
-                    🎯 दिल्ली दरबार....3:30pm<br>
-                    🎯 श्री गणेश........4:30 Pm<br>
-                    🎯 रूप नगर..........5:10pm<br>
-                    🎯 फरीदाबाद.......5:50 pm<br>
-                    🎯 फतेहपुर..........7:10 pm<br>
-                    🎯 गाजियाबाद......8:50 pm<br>
-                    🎯 नोएडानाईट.....10:00 pm<br>
-                    🎯 गली...............11:15pm<br>
-                    🎯 दिसावर ..........3:00 am
-                </div>
+            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
-                <div>
-                    जोड़ी रेट<br>
-                    जोड़ी रेट 10-------960<br>
-                    हरफ रेट 100-----960
-                </div>
+            <div class="rv-ad-purple">
+                Game Play करने के लिये नीचे लिंक पर क्लिक करे
+            </div>
 
-                <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
-
-                <div class="rv-ad-purple">
-                    Game Play करने के लिए नीचे लिंक पर क्लिक करे
-                </div>
-
+            <a href="https://wa.me/919896916793" target="_blank" style="text-decoration:none;">
                 <span class="rv-ad-img">
-                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai">
+                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
                 </span>
+            </a>
 
-                <div>Click to chat</div>
-            </div>
-        </section>
-    @endif
-</div>
+            <div>Click to chat</div>
+        </div>
+    </section>
+@endif
+
+
+    
 
 
     <br>
