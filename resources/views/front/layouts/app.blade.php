@@ -56,7 +56,7 @@
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/style.css') }}">
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/background.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
 
     <style>
         p { margin: 0; }
