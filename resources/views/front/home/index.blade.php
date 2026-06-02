@@ -17,90 +17,50 @@
         }
     @endphp
 
-    {{-- <div class="col-md-12 text-center" style="background-color:white;">
-    <div class="ads" style="padding:8px 0; margin:8px 0; background:#FF5252; color:white; text-align:center;">
-        <h4 class="text-center text-black" style="font-weight:bolder;">
-            व्हाट्सएप पर सुपर फास्ट रिजल्ट देखने के लिए नीचे दिए गए लिंक पर जाएं और चैनल को फॉलो करें।
-        </h4>
-
-        <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T">
-            <img src="{{ asset('Join-WhatsApp.png') }}"
-                 width="160px"
-                 style="display:block; margin-bottom:10px; margin-left:auto; margin-right:auto;">
-        </a>
-    </div>
-</div> --}}
+  
 
 
-    @php
-        $bottomAdvertisement = \App\Models\Advertisement::where('is_active', true)
-            ->where('position', 'bottom')
-            ->latest()
-            ->first();
-    @endphp
+{{-- Sidebar Advertisement --}}
+@php
+    $sidebarAdvertisement = \App\Models\Advertisement::where('is_active', true)
+        ->where('position', 'sidebar')
+        ->latest()
+        ->first();
+@endphp
 
-    @if ($bottomAdvertisement)
-        <div class="col-md-12 text-center" style="background-color:white;">
-            <div class="ads" style="padding:8px 0; margin:8px 0; background:#FF5252; color:white; text-align:center;">
+@if ($sidebarAdvertisement)
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box">
+            @if ($sidebarAdvertisement->content)
+                <div>
+                    {!! $sidebarAdvertisement->content !!}
+                </div>
+            @elseif($sidebarAdvertisement->title)
+                <h2 class="rv-ad-name">{{ $sidebarAdvertisement->title }}</h2>
+            @endif
 
-                @if ($bottomAdvertisement->content)
-                    <div class="text-center text-black" style="font-weight:bolder;">
-                        {!! $bottomAdvertisement->content !!}
-                    </div>
-                @elseif($bottomAdvertisement->title)
-                    {{-- <h4 class="text-center text-black" style="font-weight:bolder;">
-                {{ $bottomAdvertisement->title }}
-            </h4> --}}
-                @endif
-
-                @if ($bottomAdvertisement->image)
-                    <a href="{{ $bottomAdvertisement->link ?? '#' }}" target="_blank">
-                        <img src="{{ asset('storage/' . $bottomAdvertisement->image) }}" width="160px"
-                            style="display:block; margin-bottom:10px; margin-left:auto; margin-right:auto;">
-                    </a>
-                @endif
-
-            </div>
-        </div>
-    @else
-        <div class="col-md-12 text-center" style="background-color:white;">
-            <div class="ads" style="padding:8px 0; margin:8px 0; background:#FF5252; color:white; text-align:center;">
-                <h4 class="text-center text-black" style="font-weight:bolder;">
-                    व्हाट्सएप पर सुपर फास्ट रिजल्ट देखने के लिए नीचे दिए गए लिंक पर जाएं और चैनल को फॉलो करें।
-                </h4>
-
-                <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T" target="_blank">
-                    <img src="{{ asset('Join-WhatsApp.png') }}" width="160px"
-                        style="display:block; margin-bottom:10px; margin-left:auto; margin-right:auto;">
+            @if ($sidebarAdvertisement->image)
+                <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
+                             alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}">
+                    </span>
                 </a>
-            </div>
+            @endif
         </div>
-    @endif
+    </section>
+@else
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box">
+            <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
 
-    {{-- <div class="drag">
-    <h2>
-       
+            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
-        <a href="/">
-            <span>A7-SATTAFAST LIVE RESULT</span>
-        </a>
-
-        <div style="background:#fff; padding:10px 15px; margin-top:8px; text-align:center; border:3px solid #0000cc; border-radius:12px; font-family:Arial, sans-serif;">
-
-            <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
-                सीधे सट्टा कंपनी का No 1 खाईवाल
-            </div>
-
-            <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
-                ☆☆ ABHISHEK Bhai KHAIWAL☆☆
-            </div>
-
-            <div style="font-size:23px; font-weight:700; color:#111; line-height:1.35;">
-                🎯 पालिका बाजार..1:20pm<br>
+            <div>
+                🎯 पालिका बाजार.1:20pm<br>
                 🎯 प्रयागराज........2:00pm<br>
                 🎯 दिल्लीबाजार ...3:00pm<br>
-                🎯 दिल्ली दरबार....3:30pm<br>
-                🎯 श्री गणेश........4:30 Pm<br>
+                🎯 श्री गणेश.........4:0 Pm<br>
                 🎯 रूप नगर..........5:10pm<br>
                 🎯 फरीदाबाद.......5:50 pm<br>
                 🎯 फतेहपुर..........7:10 pm<br>
@@ -110,124 +70,83 @@
                 🎯 दिसावर ..........3:00 am
             </div>
 
-            <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
+            <div>
                 जोड़ी रेट<br>
                 जोड़ी रेट 10-------960<br>
                 हरफ रेट 100-----960
             </div>
 
-            <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
-                ☆☆ ABHISHEK Bhai KHAIWAL ☆☆
+            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+
+            <div class="rv-ad-purple">
+                Game Play करने के लिये नीचे लिंक पर क्लिक करे
             </div>
 
-            <div style="font-size:22px; font-weight:800; color:#9b59b6;">
-                Game Play करने के लिए नीचे लिंक पर क्लिक करे
-            </div>
-
-            <img src="{{ asset('whatsAppChat.png') }}"
-                 alt="ABHISHEK Bhai"
-                 style="margin-top:8px; max-width:120px; height:auto;">
-
-            <div style="font-size:22px; font-weight:800; color:#111; margin-top:6px;">
-                Click to chat
-            </div>
-
-        </div>
-    </h2>
-</div> --}}
-
-
-
-
-    @php
-        $middleAdvertisement = \App\Models\Advertisement::where('is_active', true)
-            ->where('position', 'middle')
-            ->latest()
-            ->first();
-    @endphp
-
-    <div class="drag">
-        <h2>
-            <a href="/">
-                <span>A7-SATTAFAST LIVE RESULT</span>
+            <a href="https://wa.me/919896916793" target="_blank" style="text-decoration:none;">
+                <span class="rv-ad-img">
+                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
+                </span>
             </a>
 
-            @if ($middleAdvertisement)
-                <div
-                    style="background:#fff; padding:10px 15px; margin-top:8px; text-align:center; border:3px solid #0000cc; border-radius:12px; font-family:Arial, sans-serif;">
+            <div>Click to chat</div>
+        </div>
+    </section>
+@endif
 
-                    @if ($middleAdvertisement->content)
-                        <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
-                            {!! $middleAdvertisement->content !!}
-                        </div>
-                    @elseif($middleAdvertisement->title)
-                        {{-- <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
-                        {{ $middleAdvertisement->title }}
-                    </div> --}}
-                    @endif
 
-                    @if ($middleAdvertisement->image)
-                        <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank">
-                            <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
-                                alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}"
-                                style="margin-top:8px; max-width:120px; height:auto;">
-                        </a>
-                    @endif
 
+
+{{-- Bottom Advertisement --}}
+@php
+    $bottomAdvertisement = \App\Models\Advertisement::where('is_active', true)
+        ->where('position', 'bottom')
+        ->latest()
+        ->first();
+@endphp
+
+@if ($bottomAdvertisement)
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box rv-middle">
+            @if ($bottomAdvertisement->content)
+                <div>
+                    {!! $bottomAdvertisement->content !!}
                 </div>
-            @else
-                <div
-                    style="background:#fff; padding:10px 15px; margin-top:8px; text-align:center; border:3px solid #0000cc; border-radius:12px; font-family:Arial, sans-serif;">
-
-                    <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
-                        सीधे सट्टा कंपनी का No 1 खाईवाल
-                    </div>
-
-                    <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
-                        ☆☆ ABHISHEK Bhai KHAIWAL☆☆
-                    </div>
-
-                    <div style="font-size:23px; font-weight:700; color:#111; line-height:1.35;">
-                        🎯 पालिका बाजार..1:20pm<br>
-                        🎯 प्रयागराज........2:00pm<br>
-                        🎯 दिल्लीबाजार ...3:00pm<br>
-                        🎯 दिल्ली दरबार....3:30pm<br>
-                        🎯 श्री गणेश........4:30 Pm<br>
-                        🎯 रूप नगर..........5:10pm<br>
-                        🎯 फरीदाबाद.......5:50 pm<br>
-                        🎯 फतेहपुर..........7:10 pm<br>
-                        🎯 गाजियाबाद......8:50 pm<br>
-                        🎯 नोएडानाईट.....10:00 pm<br>
-                        🎯 गली...............11:15pm<br>
-                        🎯 दिसावर ..........3:00 am
-                    </div>
-
-                    <div style="font-size:22px; font-weight:700; color:#111; line-height:1.4;">
-                        जोड़ी रेट<br>
-                        जोड़ी रेट 10-------960<br>
-                        हरफ रेट 100-----960
-                    </div>
-
-                    <div style="font-size:23px; font-weight:800; color:#c9342d; line-height:1.4;">
-                        ☆☆ ABHISHEK Bhai KHAIWAL ☆☆
-                    </div>
-
-                    <div style="font-size:22px; font-weight:800; color:#9b59b6;">
-                        Game Play करने के लिए नीचे लिंक पर क्लिक करे
-                    </div>
-
-                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai"
-                        style="margin-top:8px; max-width:120px; height:auto;">
-
-                    <div style="font-size:22px; font-weight:800; color:#111; margin-top:6px;">
-                        Click to chat
-                    </div>
-
-                </div>
+            @elseif($bottomAdvertisement->title)
+                <h4>{{ $bottomAdvertisement->title }}</h4>
             @endif
-        </h2>
-    </div>
 
+            @if ($bottomAdvertisement->image)
+                <a href="{{ $bottomAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('storage/' . $bottomAdvertisement->image) }}"
+                             alt="{{ $bottomAdvertisement->title ?? 'Advertisement' }}">
+                    </span>
+                </a>
+            @endif
+        </div>
+    </section>
+@else
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box rv-middle">
+            <h4>
+                व्हाट्सएप पर सुपर फास्ट रिजल्ट देखने के लिए नीचे दिए गए लिंक पर जाएं और चैनल को फॉलो करें।
+            </h4>
+
+            <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T" target="_blank" style="text-decoration:none;">
+                <span class="rv-ad-img">
+                    <img src="{{ asset('Join-WhatsApp.png') }}" alt="Join WhatsApp">
+                </span>
+            </a>
+        </div>
+    </section>
+@endif
+
+
+
+
+
+   
+{{-- game result --}}
 
     <div class="resultchart" style="background-color:#fff;">
         <div class="addb">
@@ -302,77 +221,62 @@
     </div>
 
 
+    {{-- game resuld --}}
 
 
-    <style>
-        .khaiwalbox2-box {
-            width: 100%;
-            background: linear-gradient(90deg, #6b0030 0%, #b00058 100%);
-            color: #ffffff;
-            text-align: center;
-            padding: 25px 15px;
-            border-radius: 0 0 12px 12px;
-            font-family: Arial, sans-serif;
-            font-weight: 700;
-        }
+ 
 
-        .khaiwalbox2-box h2,
-        .khaiwalbox2-box h3,
-        .khaiwalbox2-box p {
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    {{-- Middle Advertisement --}}
+@php
+    $middleAdvertisement = \App\Models\Advertisement::where('is_active', true)
+        ->where('position', 'middle')
+        ->latest()
+        ->first();
+@endphp
 
-        .khaiwalbox2-box h3 {
-            font-size: 22px;
-            margin: 4px 0;
-            color: #fff;
-        }
+<div class="drag">
+    <h2 class="rv-result-title">
+        <a href="/">
+            <span>A7-SATTAFAST LIVE RESULT</span>
+        </a>
+    </h2>
 
-        .khaiwalbox2-box h2 {
-            font-size: 24px;
-            margin: 6px 0;
-            color: #d26a32;
-        }
+    @if ($middleAdvertisement)
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box">
+                @if ($middleAdvertisement->content)
+                    <div>
+                        {!! $middleAdvertisement->content !!}
+                    </div>
+                @elseif($middleAdvertisement->title)
+                    <div class="rv-ad-name">
+                        {{ $middleAdvertisement->title }}
+                    </div>
+                @endif
 
-        .khaiwalbox2-box p {
-            font-size: 22px;
-            line-height: 1.35;
-            margin: 5px auto;
-            display: inline-block;
-            text-align: left;
-        }
+                @if ($middleAdvertisement->image)
+                    <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                        <span class="rv-ad-img">
+                            <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
+                                 alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}">
+                        </span>
+                    </a>
+                @endif
+            </div>
+        </section>
+    @else
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box">
+                <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
 
-        .khaiwalbox2-box .purple-text {
-            color: #b970d5;
-            font-size: 22px;
-            font-weight: 800;
-        }
+                <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
-        .khaiwalbox2-box img {
-            display: block;
-            margin: 5px auto;
-            max-width: 225px;
-            height: 78px;
-            border: 1px solid #fff;
-        }
-    </style>
-
-    {{-- <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm">
-            <div class="khaiwalbox2-box">
-
-                <h3>सीधे सट्टा कंपनी का No 1 खाईवाल</h3>
-
-                <h2>☆☆ ABHISHEK Bhai KHAIWAL☆☆</h2>
-
-                <p>
-                    🎯 पालिका बाजार.1:20pm<br>
+                <div>
+                    🎯 पालिका बाजार..1:20pm<br>
                     🎯 प्रयागराज........2:00pm<br>
                     🎯 दिल्लीबाजार ...3:00pm<br>
-                    🎯 श्री गणेश.........4:0 Pm<br>
+                    🎯 दिल्ली दरबार....3:30pm<br>
+                    🎯 श्री गणेश........4:30 Pm<br>
                     🎯 रूप नगर..........5:10pm<br>
                     🎯 फरीदाबाद.......5:50 pm<br>
                     🎯 फतेहपुर..........7:10 pm<br>
@@ -380,106 +284,29 @@
                     🎯 नोएडानाईट.....10:00 pm<br>
                     🎯 गली...............11:15pm<br>
                     🎯 दिसावर ..........3:00 am
-                </p>
+                </div>
 
-                <h3>
+                <div>
                     जोड़ी रेट<br>
                     जोड़ी रेट 10-------960<br>
                     हरफ रेट 100-----960
-                </h3>
-
-                <h2>☆☆ ABHISHEK Bhai KHAIWAL ☆☆</h2>
-
-                <h3 class="purple-text">Game Play करने के लिये नीचे लिंक पर क्लिक करे</h3>
-
-                <a href="https://wa.me/91XXXXXXXXXX" target="_blank">
-                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
-                </a>
-
-                <h3>Click to chat</h3>
-
-            </div>
-        </div>
-    </div>
-</div> --}}
-
-
-
-    @php
-        $sidebarAdvertisement = \App\Models\Advertisement::where('is_active', true)
-            ->where('position', 'sidebar')
-            ->latest()
-            ->first();
-    @endphp
-
-    @if ($sidebarAdvertisement)
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm">
-                    <div class="khaiwalbox2-box">
-
-                        @if ($sidebarAdvertisement->content)
-                            {!! $sidebarAdvertisement->content !!}
-                        @elseif($sidebarAdvertisement->title)
-                            <h2>{{ $sidebarAdvertisement->title }}</h2>
-                        @endif
-
-                        @if ($sidebarAdvertisement->image)
-                            <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank">
-                                <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
-                                    alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}">
-                            </a>
-                        @endif
-
-                    </div>
                 </div>
-            </div>
-        </div>
-    @else
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm">
-                    <div class="khaiwalbox2-box">
 
-                        <h3>सीधे सट्टा कंपनी का No 1 खाईवाल</h3>
+                <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
-                        <h2>☆☆ ABHISHEK Bhai KHAIWAL☆☆</h2>
-
-                        <p>
-                            🎯 पालिका बाजार.1:20pm<br>
-                            🎯 प्रयागराज........2:00pm<br>
-                            🎯 दिल्लीबाजार ...3:00pm<br>
-                            🎯 श्री गणेश.........4:0 Pm<br>
-                            🎯 रूप नगर..........5:10pm<br>
-                            🎯 फरीदाबाद.......5:50 pm<br>
-                            🎯 फतेहपुर..........7:10 pm<br>
-                            🎯 गाजियाबाद......8:50 pm<br>
-                            🎯 नोएडानाईट.....10:00 pm<br>
-                            🎯 गली...............11:15pm<br>
-                            🎯 दिसावर ..........3:00 am
-                        </p>
-
-                        <h3>
-                            जोड़ी रेट<br>
-                            जोड़ी रेट 10-------960<br>
-                            हरफ रेट 100-----960
-                        </h3>
-
-                        <h2>☆☆ ABHISHEK Bhai KHAIWAL ☆☆</h2>
-
-                        <h3 class="purple-text">Game Play करने के लिये नीचे लिंक पर क्लिक करे</h3>
-
-                        <a href="https://wa.me/919896916793" target="_blank">
-                            <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
-                        </a>
-
-                        <h3>Click to chat</h3>
-
-                    </div>
+                <div class="rv-ad-purple">
+                    Game Play करने के लिए नीचे लिंक पर क्लिक करे
                 </div>
+
+                <span class="rv-ad-img">
+                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai">
+                </span>
+
+                <div>Click to chat</div>
             </div>
-        </div>
+        </section>
     @endif
+</div>
 
 
     <br>

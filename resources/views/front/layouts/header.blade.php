@@ -127,6 +127,7 @@
 
 
 
+{{-- Top Advertisement --}}
 @php
     $advertisment = \App\Models\Advertisement::where('is_active', true)
         ->where('position', 'top')
@@ -135,51 +136,42 @@
 @endphp
 
 @if($advertisment)
-    <div class="addb" style="background:#e9e9e9; padding:20px; margin-top:10px; text-align:center; border:2px solid #00008b; border-radius:15px;">
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box">
+            @if($advertisment->content)
+                <div>
+                    {!! $advertisment->content !!}
+                </div>
+            @endif
 
-        {{-- @if($advertisment->title)
-            <h2 style="margin:0; font-size:22px; font-weight:bold;">
-                {{ $advertisment->title }}
-            </h2>
-        @endif --}}
-
-        @if($advertisment->content)
-            <div style="margin-top:10px; font-size:20px; font-weight:600; line-height:1.6;">
-                {!! $advertisment->content !!}
-            </div>
-        @endif
-
-        @if($advertisment->image)
-            <a href="{{ $advertisment->link ?? '#' }}" target="_blank">
-                <img src="{{ asset('storage/' . $advertisment->image) }}"
-                     alt="{{ $advertisment->title ?? 'Advertisement' }}"
-                     style="margin-top:10px; max-width:120px; height:auto;">
-            </a>
-        @endif
-
-    </div>
+            @if($advertisment->image)
+                <a href="{{ $advertisment->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('storage/' . $advertisment->image) }}"
+                             alt="{{ $advertisment->title ?? 'Advertisement' }}">
+                    </span>
+                </a>
+            @endif
+        </div>
+    </section>
 @else
-    <div class="addb" style="background:#e9e9e9; padding:20px; margin-top:10px; text-align:center; border:2px solid #00008b; border-radius:15px;">
+    <section class="rv-ad-wrap">
+        <div class="rv-ad-box">
+            <h2 class="rv-ad-title">नमस्कार साथियों</h2>
 
-        <h2 style="margin:0; font-size:22px; font-weight:bold;">
-            नमस्कार साथियों
-        </h2>
+            <p>
+                सीधा कंपनी खाईवाल के पास गेम प्ले करे<br>
+                बिंदास 1001% पेमेंट की गारंटी के साथ<br>
+                आपका अपना भाई
+            </p>
 
-        <p style="margin-top:10px; font-size:20px; font-weight:600; line-height:1.6;">
-            सीधा कंपनी खाईवाल के पास गेम प्ले करे
-            बिंदास 1001% पेमेंट की गारंटी के साथ
-            आपका अपना भाई
-        </p>
+            <h2 class="rv-ad-name">S.K Bhai</h2>
 
-        <h2 style="margin-top:25px; font-size:28px; font-weight:bold;">
-            S.K Bhai
-        </h2>
-
-        <img src="{{ asset('Wp.png') }}"
-             alt="S.K Bhai"
-             style="margin-top:10px; max-width:120px; height:auto;">
-
-    </div>
+            <span class="rv-ad-img">
+                <img src="{{ asset('Wp.png') }}" alt="S.K Bhai">
+            </span>
+        </div>
+    </section>
 @endif
 
 
