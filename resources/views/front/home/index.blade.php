@@ -251,14 +251,14 @@
 
                 <div class="gamebox col-md-6 col-sm-6 col-xs-6">
                     <font class="boxresult">
-                        <a class="text-blacks" href="{{ url('record/' . $game->slug) }}" title="{{ $game->name }}">
+                        <a class="text-blacks" href="{{ url('records/' . $game->slug) }}" title="{{ $game->name }}">
                             {{ $game->name }}
                         </a>
                     </font>
 
                     <br>
 
-                    <a class="text-black" href="{{ url('record/' . $game->slug) }}" title="records">
+                    <a class="text-black" href="{{ url('records/' . $game->slug) }}" title="records">
                         Records
                     </a>
 
@@ -1000,7 +1000,7 @@
             font-size:24px;
             color:#000;
         ">
-                <a href="{{ url('record/' . $game->slug) }}" style="color:#000; text-decoration:none;">
+                <a href="{{ url('records/' . $game->slug) }}" style="color:#000; text-decoration:none;">
                     SATTA RECORD CHART {{ $game->name }}
                 </a>
             </div>
@@ -1025,7 +1025,7 @@
                 font-size:24px;
                 color:#000;
             ">
-                    <a href="{{ url('record/' . $game->slug . '/' . $year) }}" style="color:#000; text-decoration:none;">
+                    <a href="{{ url('records/' . $game->slug . '/' . $year) }}" style="color:#000; text-decoration:none;">
                         SATTA RECORD CHART {{ $year }}
                     </a>
                 </div>

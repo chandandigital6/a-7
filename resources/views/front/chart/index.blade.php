@@ -14,7 +14,7 @@
 
     <div class="king-heading">
         <span style="font-weight:bold;text-align:center;margin-top:10px;background-color:#F5004F;border:2px solid #fff;padding:7px;color:#FFF;font-size:22px!important;display:flex;justify-content:center;">
-            <a href="{{ url('record/' . $game->slug) }}"
+            <a href="{{ url('records/' . $game->slug) }}"
                style="color:#fff;text-decoration:none;">
                 {{ strtoupper($game->name) }} SATTA RECORD CHART
             </a>
@@ -26,7 +26,7 @@
         @continue(empty($chartYear->year))
 
         <div class="list">
-            <a href="{{ url('record/' . $game->slug . '/' . $chartYear->year) }}"
+            <a href="{{ url('records/' . $game->slug . '/' . $chartYear->year) }}"
                style="color:black;"
                title="{{ $game->name }} {{ $chartYear->year }}">
                 {{ strtoupper($game->name) }} SATTA RECORD CHART {{ $chartYear->year }}
@@ -46,7 +46,7 @@
 
         @foreach($fallbackYears as $year)
             <div class="list">
-                <a href="{{ url('record/' . $game->slug . '/' . $year) }}"
+                <a href="{{ url('records/' . $game->slug . '/' . $year) }}"
                    style="color:black;"
                    title="{{ $game->name }} {{ $year }}">
                     {{ strtoupper($game->name) }} SATTA RECORD CHART {{ $year }}
