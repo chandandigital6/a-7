@@ -29,6 +29,14 @@ Route::get('/privacy-policy', [FrontController::class, 'privacyPolicy'])->name('
 Route::get('/terms-conditions', [FrontController::class, 'termsConditions'])->name('terms-conditions');
 
 
+Route::get('/sitemap.xml', function () {
+    return response()
+        ->view('sitemap')
+        ->header('Content-Type', 'application/xml');
+});
+
+
+
 Route::prefix('{current_team}')
     ->middleware(['auth', 'verified', EnsureTeamMembership::class])
     ->group(function () {
