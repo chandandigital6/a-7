@@ -27,7 +27,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('seo_pages', function (Blueprint $table) {
-            //
+              $table->dropUnique('seo_game_slug_year_unique');
+        $table->dropColumn(['game_api_id', 'game_name', 'game_slug', 'year']);
         });
     }
 };

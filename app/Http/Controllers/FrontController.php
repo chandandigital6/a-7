@@ -234,11 +234,26 @@ public function yearRecord(string $slug, int $year)
         $results = collect();
     }
 
-     $seo = SeoPage::where('page_key', 'game-year-record')->first();
+ 
      $contentBlocks = ContentBlock::where('game_slug', $slug)
     ->where('is_active', true)
     ->latest()
     ->get();
+    
+
+    $seo = SeoPage::where('game_slug', $slug)
+    ->where('year', $year)
+    ->first();
+
+if (!$seo) {
+    $seo = SeoPage::where('game_slug', $slug)
+        ->whereNull('year')
+        ->first();
+}
+
+if (!$seo) {
+    $seo = SeoPage::where('page_key', 'game-year-record')->first();
+}
 
     return view('front.game.year_record', compact('game', 'results', 'year', 'seo', 'contentBlocks'));
 }

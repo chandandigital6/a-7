@@ -140,6 +140,32 @@
     </p>
 </div>
 
+
+<select name="game_slug" id="game_slug" class="form-control" required>
+    <option value="">Select Game</option>
+
+    @foreach($games as $game)
+        <option 
+            value="{{ $game->slug }}"
+            data-id="{{ $game->id }}"
+            data-name="{{ $game->name }}"
+            data-years='@json($game->chartYears)'
+            @selected(old('game_slug', $seoPage->game_slug ?? '') == $game->slug)
+        >
+            {{ $game->name }}
+        </option>
+    @endforeach
+</select>
+
+<input type="hidden" name="game_api_id" id="game_api_id" value="{{ old('game_api_id', $seoPage->game_api_id ?? '') }}">
+<input type="hidden" name="game_name" id="game_name" value="{{ old('game_name', $seoPage->game_name ?? '') }}">
+
+<select name="year" id="year" class="form-control">
+    <option value="">Select Year</option>
+</select>
+
+
+
                 <div class="flex justify-end">
 
                     <button type="submit"
@@ -156,5 +182,56 @@
         </div>
 
     </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const gameSelect = document.getElementById('game_slug');
+    const yearSelect = document.getElementById('year');
+    const gameApiId = document.getElementById('game_api_id');
+    const gameName = document.getElementById('game_name');
+    const selectedYear = "{{ old('year', $seoPage->year ?? '') }}";
+
+    function loadYears() {
+        const option = gameSelect.options[gameSelect.selectedIndex];
+
+        gameApiId.value = option.dataset.id || '';
+        gameName.value = option.dataset.name || '';
+
+        yearSelect.innerHTML = '<option value="">Select Year</option>';
+
+        let years = [];
+
+        try {
+            years = JSON.parse(option.dataset.years || '[]');
+        } catch (e) {
+            years = [];
+        }
+
+        if (years.length === 0) {
+            const currentYear = new Date().getFullYear();
+            years = [
+                {year: currentYear},
+                {year: currentYear - 1},
+                {year: currentYear - 2},
+            ];
+        }
+
+        years.forEach(function (item) {
+            const opt = document.createElement('option');
+            opt.value = item.year;
+            opt.textContent = item.year;
+
+            if (String(item.year) === String(selectedYear)) {
+                opt.selected = true;
+            }
+
+            yearSelect.appendChild(opt);
+        });
+    }
+
+    gameSelect.addEventListener('change', loadYears);
+    loadYears();
+});
+</script>
 
 </x-layouts::app>
