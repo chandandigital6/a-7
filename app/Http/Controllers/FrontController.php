@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Advertisement;
-
+use App\Models\ContentBlock;
 class FrontController extends Controller
 {
     private string $apiBaseUrl;
@@ -235,8 +235,12 @@ public function yearRecord(string $slug, int $year)
     }
 
      $seo = SeoPage::where('page_key', 'game-year-record')->first();
+     $contentBlocks = ContentBlock::where('game_slug', $slug)
+    ->where('is_active', true)
+    ->latest()
+    ->get();
 
-    return view('front.game.year_record', compact('game', 'results', 'year', 'seo'));
+    return view('front.game.year_record', compact('game', 'results', 'year', 'seo', 'contentBlocks'));
 }
     
 
