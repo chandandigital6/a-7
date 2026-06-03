@@ -55,7 +55,7 @@
                     <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
                         <span class="rv-ad-img">
                             <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
-                                 alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}">
+                                 alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
                         </span>
                     </a>
                 @endif
@@ -96,7 +96,7 @@
                 </div>
 
                 <span class="rv-ad-img">
-                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai">
+                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai" width="auto" height="auto">
                 </span>
 
                 <div>Click to chat</div>
@@ -128,7 +128,7 @@
                 <a href="{{ $bottomAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
                     <span class="rv-ad-img">
                         <img src="{{ asset('storage/' . $bottomAdvertisement->image) }}"
-                             alt="{{ $bottomAdvertisement->title ?? 'Advertisement' }}">
+                             alt="{{ $bottomAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
                     </span>
                 </a>
             @endif
@@ -143,7 +143,7 @@
 
             <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T" target="_blank" style="text-decoration:none;">
                 <span class="rv-ad-img">
-                    <img src="{{ asset('Join-WhatsApp.png') }}" alt="Join WhatsApp">
+                    <img src="{{ asset('Join-WhatsApp.png') }}" alt="Join WhatsApp" width="auto" height="auto">
                 </span>
             </a>
         </div>
@@ -256,7 +256,7 @@
                 <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
                     <span class="rv-ad-img">
                         <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
-                             alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}">
+                             alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
                     </span>
                 </a>
             @endif
@@ -297,7 +297,7 @@
 
             <a href="https://wa.me/919896916793" target="_blank" style="text-decoration:none;">
                 <span class="rv-ad-img">
-                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai">
+                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai" width="auto" height="auto">
                 </span>
             </a>
 
