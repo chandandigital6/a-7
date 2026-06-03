@@ -46,15 +46,15 @@
                 </flux:sidebar.item>
 
 
-                <flux:sidebar.item icon="bell-alert" :href="route('notices.index')"
+                {{-- <flux:sidebar.item icon="bell-alert" :href="route('notices.index')"
                     :current="request()->routeIs('notices.*')" wire:navigate>
                     {{ __('Notices') }}
-                </flux:sidebar.item>
+                </flux:sidebar.item> --}}
 
-                {{-- <flux:sidebar.item icon="document-text" :href="route('content-blocks.index')"
+                <flux:sidebar.item icon="document-text" :href="route('content-blocks.index')"
                     :current="request()->routeIs('content-blocks.*')" wire:navigate>
                     {{ __('Content Blocks') }}
-                </flux:sidebar.item> --}}
+                </flux:sidebar.item>
 
                 <flux:sidebar.item icon="globe-alt" :href="route('seo-pages.index')"
                     :current="request()->routeIs('seo-pages.*')" wire:navigate>
