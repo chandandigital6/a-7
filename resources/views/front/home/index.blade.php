@@ -552,7 +552,7 @@
 
         <div class="a7-container">
 
-            <h1 class="a7-title">Play A7 Satta King Result Today and Get Fast & Accurate A7 Satta Updates</h1>
+            <h2 class="a7-title">Play A7 Satta King Result Today and Get Fast & Accurate A7 Satta Updates</h2>
 
             <div class="a7-content-box">
                 <p>
