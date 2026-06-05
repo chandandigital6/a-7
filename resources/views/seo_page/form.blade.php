@@ -141,7 +141,7 @@
 </div>
 
 
-<select name="game_slug" id="game_slug" class="form-control" required>
+<select name="game_slug" id="game_slug" class="form-control" >
     <option value="">Select Game</option>
 
     @foreach($games as $game)

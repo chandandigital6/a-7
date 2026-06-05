@@ -89,9 +89,15 @@
                         Content
                     </label>
 
-                    <textarea name="content" id="content_editor" rows="8" placeholder="Enter content here..."
-                        class="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm">{{ old('content', $contentBlock->content ?? '') }}</textarea>
+                    {{-- <textarea name="content" id="content_editor" rows="8" placeholder="Enter content here..."
+                        class="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm">{{ old('content', $contentBlock->content ?? '') }}</textarea> --}}
+               
+                          <textarea name="content" id="content_editor" rows="10">
+{{ old('content', $contentBlock->content ?? '') }}
+</textarea>
                 </div>
+               
+                    </div>
 
                 <div class="flex items-center gap-3">
                     <input type="checkbox" name="is_active" value="1" id="is_active" @checked(old('is_active', $contentBlock->is_active ?? true))
@@ -126,6 +132,35 @@
 
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    ClassicEditor
+        .create(document.querySelector('#content_editor'), {
+            toolbar: [
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'underline',
+                'link',
+                '|',
+                'bulletedList',
+                'numberedList',
+                '|',
+                'blockQuote',
+                'insertTable',
+                'undo',
+                'redo'
+            ]
+        })
+        .then(editor => {
+            editor.ui.view.editable.element.style.minHeight = '250px';
+        })
+        .catch(error => console.error(error));
+});
+</script>
+
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const gameSelect = document.getElementById('game_slug');
@@ -142,9 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
     gameSelect.addEventListener('change', setGameData);
     setGameData();
 
-    ClassicEditor
-        .create(document.querySelector('#content_editor'))
-        .catch(error => console.error(error));
+   
 });
 </script>
 
