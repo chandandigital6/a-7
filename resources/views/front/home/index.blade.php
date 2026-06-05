@@ -157,80 +157,117 @@
    
 {{-- game result --}}
 
-    <div class="resultchart" style="background-color:#fff;">
-        <div class="addb">
-            <h3 style="text-align:center; padding:10px; color:red; font-weight:bold;">
-                A7-SATTAFAST LIVE RESULT
-            </h3>
-        </div>
+{{-- <div class="resultchart" style="background-color:#fff;">
+    <div class="addb">
+        <h3 style="text-align:center; padding:10px; color:red; font-weight:bold;">
+            A7-SATTAFAST LIVE RESULT
+        </h3>
     </div>
+</div> --}}
 
-    <div class="container-fluid">
-        <div class="border row">
+<style>
+    .gamebox {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
 
-            @forelse($games as $game)
-                @php
-                    $todayResult = $game->todayResult->result ?? null;
-                    $todayStatus = $game->todayResult->status ?? 'waiting';
+@media (max-width: 767px) {
+    .gamebox {
+        width: 50%;
+        float: left;
+    }
+}
+</style>
 
-                    $yesterdayResult = $game->yesterdayResult->result ?? null;
-                    $yesterdayStatus = $game->yesterdayResult->status ?? 'waiting';
-                @endphp
+@php
+    $gameSections = $games->chunk(18);
+@endphp
 
-                <div class="gamebox col-md-6 col-sm-6 col-xs-6">
-                    <font class="boxresult">
-                        <a class="text-blacks" href="{{ url('records/' . $game->slug) }}" title="{{ $game->name }}">
-                            {{ $game->name }}
+<div class="container-fluid">
+
+    @foreach ($gameSections as $sectionIndex => $gameSection)
+
+        <div class="{{ $sectionIndex > 0 ? 'mt-4' : '' }}">
+
+            {{-- Heading --}}
+            <div class="resultchart" style="background-color:#fff;">
+                <div class="addb">
+                    <h3 style="text-align:center; padding:10px; color:red; font-weight:bold;">
+                        A7-SATTAFAST LIVE RESULT
+                    </h3>
+                </div>
+            </div>
+
+            <div class="border row">
+
+                @forelse($gameSection as $game)
+
+                    @php
+                        $todayResult = $game->todayResult->result ?? null;
+                        $todayStatus = $game->todayResult->status ?? 'waiting';
+
+                        $yesterdayResult = $game->yesterdayResult->result ?? null;
+                        $yesterdayStatus = $game->yesterdayResult->status ?? 'waiting';
+                    @endphp
+
+                    <div class="gamebox col-md-6 col-sm-6 col-xs-6">
+                        <font class="boxresult">
+                            <a class="text-blacks" href="{{ url('records/' . $game->slug) }}">
+                                {{ $game->name }}
+                            </a>
+                        </font>
+
+                        <br>
+
+                        <a class="text-black" href="{{ url('records/' . $game->slug) }}">
+                            Records
                         </a>
-                    </font>
 
-                    <br>
+                        <br>
 
-                    <a class="text-black" href="{{ url('records/' . $game->slug) }}" title="records">
-                        Records
-                    </a>
+                        <font class="time_result">
+                            @if (!empty($game->result_time))
+                                {{ \Carbon\Carbon::parse($game->result_time)->format('h:i A') }}
+                            @endif
 
-                    <br>
+                            <br>
 
-                    <font class="time_result">
-                        {{-- ( {{ $game->result_time }} )<br> --}}
-                        {{ \Carbon\Carbon::parse($game->result_time)->format('h:i A') }} <br>
+                            <font class="kal">कल &nbsp;&nbsp; आज</font>
+                            <br>
 
-                        <font class="kal">कल &nbsp;&nbsp; आज</font> <br>
+                            <font class="gameboxresult">
+                                @if ($yesterdayStatus === 'declared' && $yesterdayResult)
+                                    {{ formatGameResult($yesterdayResult) }}
+                                @else
+                                    XX
+                                @endif
+                            </font>
+
+                            <img loading="lazy" src="{{ asset('arrow.gif') }}" width="20" height="20">
+                        </font>
 
                         <font class="gameboxresult">
-                            @if ($yesterdayStatus === 'declared' && $yesterdayResult !== null && $yesterdayResult !== '')
-                                {{ formatGameResult($yesterdayResult) }}
+                            @if ($todayStatus === 'declared' && $todayResult)
+                                {{ formatGameResult($todayResult) }}
                             @else
                                 XX
                             @endif
                         </font>
+                    </div>
 
-                        <img loading="lazy" src="{{ asset('arrow.gif') }}" width="20" height="20"
-                            role="presentation"
-                            title="SATTAKING | A7-SATTAFAST | SATTA CHART | A7-SATTAFAST RESULT | A7-SATTAFAST LIVE">
-                    </font>
+                @empty
+                    <div class="col-md-12 text-center p-3">
+                        <strong>No game data found.</strong>
+                    </div>
+                @endforelse
 
-                    <font class="gameboxresult">
-                        @if ($todayStatus === 'declared' && $todayResult !== null && $todayResult !== '')
-                            {{ formatGameResult($todayResult) }}
-                        @else
-                            XX
-                        @endif
-                    </font>
-                </div>
-
-            @empty
-                <div class="col-md-12 text-center p-3">
-                    <strong>No game data found.</strong>
-                </div>
-            @endforelse
-
+            </div>
         </div>
-    </div>
 
+    @endforeach
 
-    {{-- game resuld --}}
+</div>
 
 
  {{-- Sidebar Advertisement --}}
