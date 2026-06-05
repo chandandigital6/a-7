@@ -87,9 +87,9 @@
                     </h2>
                 @endif
 
-                <div class="prose max-w-none">
-                    {!! $block->content !!}
-                </div>
+            <div class="content-block-content">
+    {!! $block->content !!}
+</div>
             </div>
         @endforeach
     </div>
