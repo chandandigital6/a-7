@@ -205,14 +205,14 @@
 
                         <div class="gamebox col-md-6 col-sm-6 col-xs-6">
                             <font class="boxresult">
-                                <a class="text-blacks" href="{{ url('records/' . $game->slug) }}">
+                                <a class="text-blacks" href="{{ url('records/' . $game->slug) }}" style="font-size:17px">
                                     {{ $game->name }}
                                 </a>
                             </font>
 
                             <br>
 
-                            <a class="text-black" href="{{ url('records/' . $game->slug) }}">
+                            <a class="text-black" href="{{ url('records/' . $game->slug) }}" style="font-size:15px;">
                                 Records
                             </a>
 

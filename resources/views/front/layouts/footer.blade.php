@@ -91,8 +91,8 @@
     position: fixed;
     bottom: 10px;
     left: 10px;
-    background: red;
-    color: #fff !important;
+    background: #B22222;
+    color: #FFFFFF !important;
     padding: 12px 18px;
     border-radius: 50px;
     text-decoration: none;
