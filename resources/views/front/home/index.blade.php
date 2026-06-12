@@ -17,45 +17,274 @@
         }
     @endphp
 
-  
 
 
 
 
 
-{{-- Middle Advertisement --}}
-@php
-    $middleAdvertisement = \App\Models\Advertisement::where('is_active', true)
-        ->where('position', 'middle')
-        ->latest()
-        ->first();
-@endphp
 
-<div class="drag">
-    <h2 class="rv-result-title">
-        <a href="/">
-            <span>A7-SATTAFAST LIVE RESULT</span>
-        </a>
-    </h2>
+    {{-- Middle Advertisement --}}
+    @php
+        $middleAdvertisement = \App\Models\Advertisement::where('is_active', true)
+            ->where('position', 'middle')
+            ->latest()
+            ->first();
+    @endphp
 
-    @if ($middleAdvertisement)
-        <section class="rv-ad-wrap">
-            <div class="rv-ad-box">
-                @if ($middleAdvertisement->content)
+    <div class="drag">
+        <h2 class="rv-result-title">
+            <a href="/">
+                <span>A7-SATTAFAST LIVE RESULT</span>
+            </a>
+        </h2>
+
+        @if ($middleAdvertisement)
+            <section class="rv-ad-wrap">
+                <div class="rv-ad-box">
+                    @if ($middleAdvertisement->content)
+                        <div>
+                            {!! $middleAdvertisement->content !!}
+                        </div>
+                    @elseif($middleAdvertisement->title)
+                        <div class="rv-ad-name">
+                            {{ $middleAdvertisement->title }}
+                        </div>
+                    @endif
+
+                    @if ($middleAdvertisement->image)
+                        <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                            <span class="rv-ad-img">
+                                <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
+                                    alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}" width="auto"
+                                    height="auto">
+                            </span>
+                        </a>
+                    @endif
+                </div>
+            </section>
+        @else
+            <section class="rv-ad-wrap">
+                <div class="rv-ad-box">
+                    <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
+
+                    <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+
                     <div>
-                        {!! $middleAdvertisement->content !!}
+                        🎯 पालिका बाजार..1:20pm<br>
+                        🎯 प्रयागराज........2:00pm<br>
+                        🎯 दिल्लीबाजार ...3:00pm<br>
+                        🎯 दिल्ली दरबार....3:30pm<br>
+                        🎯 श्री गणेश........4:30 Pm<br>
+                        🎯 रूप नगर..........5:10pm<br>
+                        🎯 फरीदाबाद.......5:50 pm<br>
+                        🎯 फतेहपुर..........7:10 pm<br>
+                        🎯 गाजियाबाद......8:50 pm<br>
+                        🎯 नोएडानाईट.....10:00 pm<br>
+                        🎯 गली...............11:15pm<br>
+                        🎯 दिसावर ..........3:00 am
                     </div>
-                @elseif($middleAdvertisement->title)
-                    <div class="rv-ad-name">
-                        {{ $middleAdvertisement->title }}
+
+                    <div>
+                        जोड़ी रेट<br>
+                        जोड़ी रेट 10-------960<br>
+                        हरफ रेट 100-----960
                     </div>
+
+                    <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
+
+                    <div class="rv-ad-purple">
+                        Game Play करने के लिए नीचे लिंक पर क्लिक करे
+                    </div>
+
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai" width="auto" height="auto">
+                    </span>
+
+                    <div>Click to chat</div>
+                </div>
+            </section>
+        @endif
+    </div>
+
+    {{-- Bottom Advertisement --}}
+    @php
+        $bottomAdvertisement = \App\Models\Advertisement::where('is_active', true)
+            ->where('position', 'bottom')
+            ->latest()
+            ->first();
+    @endphp
+
+    @if ($bottomAdvertisement)
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box rv-middle">
+                @if ($bottomAdvertisement->content)
+                    <div>
+                        {!! $bottomAdvertisement->content !!}
+                    </div>
+                @elseif($bottomAdvertisement->title)
+                    <h4>{{ $bottomAdvertisement->title }}</h4>
                 @endif
 
-                @if ($middleAdvertisement->image)
-                    <a href="{{ $middleAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                @if ($bottomAdvertisement->image)
+                    <a href="{{ $bottomAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
                         <span class="rv-ad-img">
-                            <img src="{{ asset('storage/' . $middleAdvertisement->image) }}"
-                                 alt="{{ $middleAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
+                            <img src="{{ asset('storage/' . $bottomAdvertisement->image) }}"
+                                alt="{{ $bottomAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
+                        </span>
+                    </a>
+                @endif
+            </div>
+        </section>
+    @else
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box rv-middle">
+                <h4>
+                    व्हाट्सएप पर सुपर फास्ट रिजल्ट देखने के लिए नीचे दिए गए लिंक पर जाएं और चैनल को फॉलो करें।
+                </h4>
+
+                <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T" target="_blank"
+                    style="text-decoration:none;">
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('Join-WhatsApp.png') }}" alt="Join WhatsApp" width="auto" height="auto">
+                    </span>
+                </a>
+            </div>
+        </section>
+    @endif
+
+
+
+
+
+
+
+
+    <style>
+        .gamebox {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        @media (max-width: 767px) {
+            .gamebox {
+                width: 50%;
+                float: left;
+            }
+        }
+    </style>
+
+    @php
+        $gameSections = $games->chunk(18);
+    @endphp
+
+    <div class="container-fluid">
+
+        @foreach ($gameSections as $sectionIndex => $gameSection)
+            <div class="{{ $sectionIndex > 0 ? 'mt-4' : '' }}">
+
+                {{-- Heading --}}
+                <div class="resultchart" style="background-color:#fff;">
+                    <div class="addb">
+                        <h3 style="text-align:center; padding:10px; color:red; font-weight:bold;">
+                            A7-SATTAFAST LIVE RESULT
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="border row">
+
+                    @forelse($gameSection as $game)
+                        @php
+                            $todayResult = $game->todayResult->result ?? null;
+                            $todayStatus = $game->todayResult->status ?? 'waiting';
+
+                            $yesterdayResult = $game->yesterdayResult->result ?? null;
+                            $yesterdayStatus = $game->yesterdayResult->status ?? 'waiting';
+                        @endphp
+
+                        <div class="gamebox col-md-6 col-sm-6 col-xs-6">
+                            <font class="boxresult">
+                                <a class="text-blacks" href="{{ url('records/' . $game->slug) }}">
+                                    {{ $game->name }}
+                                </a>
+                            </font>
+
+                            <br>
+
+                            <a class="text-black" href="{{ url('records/' . $game->slug) }}">
+                                Records
+                            </a>
+
+                            <br>
+
+                            <font class="time_result">
+                                @if (!empty($game->result_time))
+                                    {{ \Carbon\Carbon::parse($game->result_time)->format('h:i A') }}
+                                @endif
+
+                                <br>
+
+                                <font class="kal">कल &nbsp;&nbsp; आज</font>
+                                <br>
+
+                                <font class="gameboxresult">
+                                    @if ($yesterdayStatus === 'declared' && $yesterdayResult)
+                                        {{ formatGameResult($yesterdayResult) }}
+                                    @else
+                                        XX
+                                    @endif
+                                </font>
+
+                                <img loading="lazy" src="{{ asset('arrow.gif') }}" width="20" height="20" alt="Arrow">
+                            </font>
+
+                            <font class="gameboxresult">
+                                @if ($todayStatus === 'declared' && $todayResult)
+                                    {{ formatGameResult($todayResult) }}
+                                @else
+                                    XX
+                                @endif
+                            </font>
+                        </div>
+
+                    @empty
+                        <div class="col-md-12 text-center p-3">
+                            <strong>No game data found.</strong>
+                        </div>
+                    @endforelse
+
+                </div>
+            </div>
+        @endforeach
+
+    </div>
+
+
+    {{-- Sidebar Advertisement --}}
+    @php
+        $sidebarAdvertisement = \App\Models\Advertisement::where('is_active', true)
+            ->where('position', 'sidebar')
+            ->latest()
+            ->first();
+    @endphp
+
+    @if ($sidebarAdvertisement)
+        <section class="rv-ad-wrap">
+            <div class="rv-ad-box">
+                @if ($sidebarAdvertisement->content)
+                    <div>
+                        {!! $sidebarAdvertisement->content !!}
+                    </div>
+                @elseif($sidebarAdvertisement->title)
+                    <h2 class="rv-ad-name">{{ $sidebarAdvertisement->title }}</h2>
+                @endif
+
+                @if ($sidebarAdvertisement->image)
+                    <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
+                        <span class="rv-ad-img">
+                            <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
+                                alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
                         </span>
                     </a>
                 @endif
@@ -69,11 +298,10 @@
                 <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
                 <div>
-                    🎯 पालिका बाजार..1:20pm<br>
+                    🎯 पालिका बाजार.1:20pm<br>
                     🎯 प्रयागराज........2:00pm<br>
                     🎯 दिल्लीबाजार ...3:00pm<br>
-                    🎯 दिल्ली दरबार....3:30pm<br>
-                    🎯 श्री गणेश........4:30 Pm<br>
+                    🎯 श्री गणेश.........4:0 Pm<br>
                     🎯 रूप नगर..........5:10pm<br>
                     🎯 फरीदाबाद.......5:50 pm<br>
                     🎯 फतेहपुर..........7:10 pm<br>
@@ -92,259 +320,22 @@
                 <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
 
                 <div class="rv-ad-purple">
-                    Game Play करने के लिए नीचे लिंक पर क्लिक करे
+                    Game Play करने के लिये नीचे लिंक पर क्लिक करे
                 </div>
 
-                <span class="rv-ad-img">
-                    <img src="{{ asset('whatsAppChat.png') }}" alt="ABHISHEK Bhai" width="auto" height="auto">
-                </span>
+                <a href="https://wa.me/919896916793" target="_blank" style="text-decoration:none;">
+                    <span class="rv-ad-img">
+                        <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai" width="auto" height="auto">
+                    </span>
+                </a>
 
                 <div>Click to chat</div>
             </div>
         </section>
     @endif
-</div>
-
-{{-- Bottom Advertisement --}}
-@php
-    $bottomAdvertisement = \App\Models\Advertisement::where('is_active', true)
-        ->where('position', 'bottom')
-        ->latest()
-        ->first();
-@endphp
-
-@if ($bottomAdvertisement)
-    <section class="rv-ad-wrap">
-        <div class="rv-ad-box rv-middle">
-            @if ($bottomAdvertisement->content)
-                <div>
-                    {!! $bottomAdvertisement->content !!}
-                </div>
-            @elseif($bottomAdvertisement->title)
-                <h4>{{ $bottomAdvertisement->title }}</h4>
-            @endif
-
-            @if ($bottomAdvertisement->image)
-                <a href="{{ $bottomAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
-                    <span class="rv-ad-img">
-                        <img src="{{ asset('storage/' . $bottomAdvertisement->image) }}"
-                             alt="{{ $bottomAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
-                    </span>
-                </a>
-            @endif
-        </div>
-    </section>
-@else
-    <section class="rv-ad-wrap">
-        <div class="rv-ad-box rv-middle">
-            <h4>
-                व्हाट्सएप पर सुपर फास्ट रिजल्ट देखने के लिए नीचे दिए गए लिंक पर जाएं और चैनल को फॉलो करें।
-            </h4>
-
-            <a href="https://whatsapp.com/channel/0029Vb67katLikgE57Pwhj0T" target="_blank" style="text-decoration:none;">
-                <span class="rv-ad-img">
-                    <img src="{{ asset('Join-WhatsApp.png') }}" alt="Join WhatsApp" width="auto" height="auto">
-                </span>
-            </a>
-        </div>
-    </section>
-@endif
 
 
 
-
-
-   
-{{-- game result --}}
-
-{{-- <div class="resultchart" style="background-color:#fff;">
-    <div class="addb">
-        <h3 style="text-align:center; padding:10px; color:red; font-weight:bold;">
-            A7-SATTAFAST LIVE RESULT
-        </h3>
-    </div>
-</div> --}}
-
-<style>
-    .gamebox {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-@media (max-width: 767px) {
-    .gamebox {
-        width: 50%;
-        float: left;
-    }
-}
-</style>
-
-@php
-    $gameSections = $games->chunk(18);
-@endphp
-
-<div class="container-fluid">
-
-    @foreach ($gameSections as $sectionIndex => $gameSection)
-
-        <div class="{{ $sectionIndex > 0 ? 'mt-4' : '' }}">
-
-            {{-- Heading --}}
-            <div class="resultchart" style="background-color:#fff;">
-                <div class="addb">
-                    <h3 style="text-align:center; padding:10px; color:red; font-weight:bold;">
-                        A7-SATTAFAST LIVE RESULT
-                    </h3>
-                </div>
-            </div>
-
-            <div class="border row">
-
-                @forelse($gameSection as $game)
-
-                    @php
-                        $todayResult = $game->todayResult->result ?? null;
-                        $todayStatus = $game->todayResult->status ?? 'waiting';
-
-                        $yesterdayResult = $game->yesterdayResult->result ?? null;
-                        $yesterdayStatus = $game->yesterdayResult->status ?? 'waiting';
-                    @endphp
-
-                    <div class="gamebox col-md-6 col-sm-6 col-xs-6">
-                        <font class="boxresult">
-                            <a class="text-blacks" href="{{ url('records/' . $game->slug) }}">
-                                {{ $game->name }}
-                            </a>
-                        </font>
-
-                        <br>
-
-                        <a class="text-black" href="{{ url('records/' . $game->slug) }}">
-                            Records
-                        </a>
-
-                        <br>
-
-                        <font class="time_result">
-                            @if (!empty($game->result_time))
-                                {{ \Carbon\Carbon::parse($game->result_time)->format('h:i A') }}
-                            @endif
-
-                            <br>
-
-                            <font class="kal">कल &nbsp;&nbsp; आज</font>
-                            <br>
-
-                            <font class="gameboxresult">
-                                @if ($yesterdayStatus === 'declared' && $yesterdayResult)
-                                    {{ formatGameResult($yesterdayResult) }}
-                                @else
-                                    XX
-                                @endif
-                            </font>
-
-                            <img loading="lazy" src="{{ asset('arrow.gif') }}" width="20" height="20">
-                        </font>
-
-                        <font class="gameboxresult">
-                            @if ($todayStatus === 'declared' && $todayResult)
-                                {{ formatGameResult($todayResult) }}
-                            @else
-                                XX
-                            @endif
-                        </font>
-                    </div>
-
-                @empty
-                    <div class="col-md-12 text-center p-3">
-                        <strong>No game data found.</strong>
-                    </div>
-                @endforelse
-
-            </div>
-        </div>
-
-    @endforeach
-
-</div>
-
-
- {{-- Sidebar Advertisement --}}
-@php
-    $sidebarAdvertisement = \App\Models\Advertisement::where('is_active', true)
-        ->where('position', 'sidebar')
-        ->latest()
-        ->first();
-@endphp
-
-@if ($sidebarAdvertisement)
-    <section class="rv-ad-wrap">
-        <div class="rv-ad-box">
-            @if ($sidebarAdvertisement->content)
-                <div>
-                    {!! $sidebarAdvertisement->content !!}
-                </div>
-            @elseif($sidebarAdvertisement->title)
-                <h2 class="rv-ad-name">{{ $sidebarAdvertisement->title }}</h2>
-            @endif
-
-            @if ($sidebarAdvertisement->image)
-                <a href="{{ $sidebarAdvertisement->link ?? '#' }}" target="_blank" style="text-decoration:none;">
-                    <span class="rv-ad-img">
-                        <img src="{{ asset('storage/' . $sidebarAdvertisement->image) }}"
-                             alt="{{ $sidebarAdvertisement->title ?? 'Advertisement' }}" width="auto" height="auto">
-                    </span>
-                </a>
-            @endif
-        </div>
-    </section>
-@else
-    <section class="rv-ad-wrap">
-        <div class="rv-ad-box">
-            <div class="rv-ad-title">सीधे सट्टा कंपनी का No 1 खाईवाल</div>
-
-            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
-
-            <div>
-                🎯 पालिका बाजार.1:20pm<br>
-                🎯 प्रयागराज........2:00pm<br>
-                🎯 दिल्लीबाजार ...3:00pm<br>
-                🎯 श्री गणेश.........4:0 Pm<br>
-                🎯 रूप नगर..........5:10pm<br>
-                🎯 फरीदाबाद.......5:50 pm<br>
-                🎯 फतेहपुर..........7:10 pm<br>
-                🎯 गाजियाबाद......8:50 pm<br>
-                🎯 नोएडानाईट.....10:00 pm<br>
-                🎯 गली...............11:15pm<br>
-                🎯 दिसावर ..........3:00 am
-            </div>
-
-            <div>
-                जोड़ी रेट<br>
-                जोड़ी रेट 10-------960<br>
-                हरफ रेट 100-----960
-            </div>
-
-            <div class="rv-ad-name">☆☆ ABHISHEK Bhai KHAIWAL ☆☆</div>
-
-            <div class="rv-ad-purple">
-                Game Play करने के लिये नीचे लिंक पर क्लिक करे
-            </div>
-
-            <a href="https://wa.me/919896916793" target="_blank" style="text-decoration:none;">
-                <span class="rv-ad-img">
-                    <img src="{{ asset('Wp.png') }}" alt="ABHISHEK Bhai" width="auto" height="auto">
-                </span>
-            </a>
-
-            <div>Click to chat</div>
-        </div>
-    </section>
-@endif
-
-
-    
 
 
     <br>
@@ -358,114 +349,68 @@
         <a href="/">A7-SATTAFAST Chart</a>
     </div>
 
-    {{-- Current Month Dynamic Chart --}}
-
-    {{-- <div class="table-responsive" style="overflow-x:scroll;">
-        <table width="100%" class="month_result_table rtable" border="1" cellspacing="0" cellpadding="0">
-
-            <tr>
-                <td
-                    style="font-size:14px; white-space:nowrap; background-color:#cc4c1a; color:#fff; text-align:center; padding:6px 8px; text-transform:uppercase;">
-                    DATE
-                </td>
-
-                @foreach ($chartGames as $chartGame)
-                    <td
-                        style="font-size:14px; white-space:nowrap; background-color:#cc4c1a; color:#fff; text-align:center; padding:6px 8px; text-transform:uppercase;">
-                        {{ $chartGame->name }}
-                    </td>
-                @endforeach
-            </tr>
-
-            @foreach ($dates as $date)
-                @php
-                    $dateKey = $date->format('Y-m-d');
-                    $dayResults = $monthlyResults->get($dateKey, collect());
-                @endphp
-
-                <tr>
-                    <td style="font-size:18px; background-color:#3333ff; color:#fff; text-align:center; font-weight:bold;">
-                        {{ $date->format('d') }}
-                    </td>
-
-                    @foreach ($chartGames as $chartGame)
-                        @php
-                            $singleResult = collect($dayResults)->firstWhere('game_slug', $chartGame->slug);
-                            $resultValue = $singleResult->result ?? null;
-                        @endphp
-
-                        <td
-                            style="font-size:15px; font-weight:bold; background-color:#fff; padding:6px 2px 7px 2px; text-align:center;">
-                            @if ($resultValue !== null && $resultValue !== '')
-                                {{ formatGameResult($resultValue) }}
-                            @else
-                                -
-                            @endif
-                        </td>
-                    @endforeach
-                </tr>
-            @endforeach
-
-        </table>
-    </div> --}}
-
+  
 
 
     @php
-    $chartGameSections = $chartGames->chunk(ceil($chartGames->count() / 2));
-@endphp
+        $chartGameSections = $chartGames->chunk(ceil($chartGames->count() / 2));
+    @endphp
 
-@foreach ($chartGameSections as $sectionIndex => $sectionChartGames)
-    <div class="table-responsive {{ $sectionIndex > 0 ? 'mt-4' : '' }}" style="overflow-x:scroll;">
-        <table width="100%" class="month_result_table rtable" border="1" cellspacing="0" cellpadding="0">
-
-            <tr>
-                <td style="font-size:14px; white-space:nowrap; background-color:#cc4c1a; color:#fff; text-align:center; padding:6px 8px; text-transform:uppercase;">
-                    DATE
-                </td>
-
-                @foreach ($sectionChartGames as $chartGame)
-                    <td style="font-size:14px; white-space:nowrap; background-color:#cc4c1a; color:#fff; text-align:center; padding:6px 8px; text-transform:uppercase;">
-                        {{ $chartGame->name }}
-                    </td>
-                @endforeach
-            </tr>
-
-            @foreach ($dates as $date)
-                @php
-                    $dateKey = $date->format('Y-m-d');
-                    $dayResults = $monthlyResults->get($dateKey, collect());
-                @endphp
+    @foreach ($chartGameSections as $sectionIndex => $sectionChartGames)
+        <div class="table-responsive {{ $sectionIndex > 0 ? 'mt-4' : '' }}" style="overflow-x:scroll;">
+            <table width="100%" class="month_result_table rtable" border="1" cellspacing="0" cellpadding="0">
 
                 <tr>
-                    <td style="font-size:18px; background-color:#3333ff; color:#fff; text-align:center; font-weight:bold;">
-                        {{ $date->format('d') }}
+                    <td
+                        style="font-size:14px; white-space:nowrap; background-color:#cc4c1a; color:#fff; text-align:center; padding:6px 8px; text-transform:uppercase;">
+                        DATE
                     </td>
 
                     @foreach ($sectionChartGames as $chartGame)
-                        @php
-                            $singleResult = collect($dayResults)->firstWhere('game_slug', $chartGame->slug);
-                            $resultValue = $singleResult->result ?? null;
-                        @endphp
-
-                        <td style="font-size:15px; font-weight:bold; background-color:#fff; padding:6px 2px 7px 2px; text-align:center;">
-                            @if ($resultValue !== null && $resultValue !== '')
-                                {{ formatGameResult($resultValue) }}
-                            @else
-                                -
-                            @endif
+                        <td
+                            style="font-size:14px; white-space:nowrap; background-color:#cc4c1a; color:#fff; text-align:center; padding:6px 8px; text-transform:uppercase;">
+                            {{ $chartGame->name }}
                         </td>
                     @endforeach
                 </tr>
-            @endforeach
 
-        </table>
-    </div>
+                @foreach ($dates as $date)
+                    @php
+                        $dateKey = $date->format('Y-m-d');
+                        $dayResults = $monthlyResults->get($dateKey, collect());
+                    @endphp
 
-    @if (!$loop->last)
-        <div style="height:25px;"></div>
-    @endif
-@endforeach
+                    <tr>
+                        <td
+                            style="font-size:18px; background-color:#3333ff; color:#fff; text-align:center; font-weight:bold;">
+                            {{ $date->format('d') }}
+                        </td>
+
+                        @foreach ($sectionChartGames as $chartGame)
+                            @php
+                                $singleResult = collect($dayResults)->firstWhere('game_slug', $chartGame->slug);
+                                $resultValue = $singleResult->result ?? null;
+                            @endphp
+
+                            <td
+                                style="font-size:15px; font-weight:bold; background-color:#fff; padding:6px 2px 7px 2px; text-align:center;">
+                                @if ($resultValue !== null && $resultValue !== '')
+                                    {{ formatGameResult($resultValue) }}
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+
+            </table>
+        </div>
+
+        @if (!$loop->last)
+            <div style="height:25px;"></div>
+        @endif
+    @endforeach
 
 
 
@@ -587,7 +532,9 @@
             }
         </style>
 
-        <div class="a7-container">
+       
+
+   <div class="a7-container">
 
             <h2 class="a7-title">Play A7 Satta King Result Today and Get Fast & Accurate A7 Satta Updates</h2>
 
@@ -890,7 +837,8 @@
                 font-size:24px;
                 color:#000;
             ">
-                    <a href="{{ url('records/' . $game->slug . '/' . $year) }}" style="color:#000; text-decoration:none;">
+                    <a href="{{ url('records/' . $game->slug . '/' . $year) }}"
+                        style="color:#000; text-decoration:none;">
                         SATTA RECORD CHART {{ $year }}
                     </a>
                 </div>
