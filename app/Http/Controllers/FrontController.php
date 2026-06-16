@@ -73,6 +73,7 @@ class FrontController extends Controller
                 $games = [];
             }
 
+            // Cache me sirf array save hoga
             Cache::put($cacheKey, $games, $this->cacheTtlForDate($date));
 
             return collect($games);
@@ -113,6 +114,7 @@ class FrontController extends Controller
             'schema_markup' => $seo->schema_markup,
         ];
 
+        // Cache me model nahi, sirf array
         Cache::put($cacheKey, $seoArray, now()->addMinutes(10));
 
         return (object) $seoArray;
@@ -127,7 +129,9 @@ class FrontController extends Controller
         $cached = Cache::get($cacheKey);
 
         if (is_array($cached)) {
-            return collect($cached)->map(fn ($ad) => (object) $ad);
+            return collect($cached)->map(function ($ad) {
+                return (object) $ad;
+            });
         }
 
         $advertisements = Advertisement::where('is_active', true)
@@ -160,12 +164,15 @@ class FrontController extends Controller
             ->values()
             ->toArray();
 
+        // Cache me Eloquent Collection nahi, sirf array
         Cache::put($cacheKey, $advertisements, now()->addMinutes(2));
 
-        return collect($advertisements)->map(fn ($ad) => (object) $ad);
+        return collect($advertisements)->map(function ($ad) {
+            return (object) $ad;
+        });
     }
 
-    private function buildHomeData(): array
+    public function home()
     {
         $today = Carbon::today('Asia/Kolkata');
         $yesterday = Carbon::yesterday('Asia/Kolkata');
@@ -221,6 +228,7 @@ class FrontController extends Controller
 
         $startDate = $today->copy()->startOfMonth();
         $endDate = $today->copy()->endOfMonth();
+
         $dates = CarbonPeriod::create($startDate, $endDate);
 
         $monthlyResults = collect();
@@ -228,9 +236,8 @@ class FrontController extends Controller
         foreach ($dates as $date) {
             $dateKey = $date->format('Y-m-d');
 
-            $monthlyResults->put(
-                $dateKey,
-                $this->getGamesResultByDate($dateKey)->map(function ($game) {
+            $dayResults = $this->getGamesResultByDate($dateKey)
+                ->map(function ($game) {
                     $result = $game['result'] ?? [];
 
                     return (object) [
@@ -240,38 +247,10 @@ class FrontController extends Controller
                         'result'      => $result['result'] ?? null,
                         'status'      => $result['status'] ?? 'waiting',
                     ];
-                })->values()
-            );
-        }
+                })
+                ->values();
 
-        return [
-            'games' => $games,
-            'chartGames' => $chartGames,
-            'dates' => $dates,
-            'monthlyResults' => $monthlyResults,
-        ];
-    }
-
-    public function home()
-    {
-        $homeCacheKey = 'a7_front_home_payload_' . Carbon::now('Asia/Kolkata')->format('Y_m_d_H_i');
-
-        $cachedHome = Cache::get($homeCacheKey);
-
-        if (is_array($cachedHome)) {
-            $games = $cachedHome['games'];
-            $chartGames = $cachedHome['chartGames'];
-            $dates = $cachedHome['dates'];
-            $monthlyResults = $cachedHome['monthlyResults'];
-        } else {
-            $homeData = $this->buildHomeData();
-
-            Cache::put($homeCacheKey, $homeData, now()->addSeconds(45));
-
-            $games = $homeData['games'];
-            $chartGames = $homeData['chartGames'];
-            $dates = $homeData['dates'];
-            $monthlyResults = $homeData['monthlyResults'];
+            $monthlyResults->put($dateKey, $dayResults);
         }
 
         $seo = $this->getSeoHome();
@@ -286,6 +265,7 @@ class FrontController extends Controller
             'advertisements'
         ));
     }
+
 
 
 //     private string $apiBaseUrl;
