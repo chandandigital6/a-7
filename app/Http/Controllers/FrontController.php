@@ -35,17 +35,11 @@ class FrontController extends Controller
     {
         $cached = Cache::get($cacheKey);
 
-        if ($cached instanceof \__PHP_Incomplete_Class) {
-            Cache::forget($cacheKey);
-            return;
-        }
-
-        if ($cached instanceof Collection) {
-            Cache::forget($cacheKey);
-            return;
-        }
-
-        if (is_object($cached) && ! is_array($cached)) {
+        if (
+            $cached instanceof \__PHP_Incomplete_Class ||
+            $cached instanceof Collection ||
+            (is_object($cached) && ! is_array($cached))
+        ) {
             Cache::forget($cacheKey);
         }
     }
@@ -133,9 +127,7 @@ class FrontController extends Controller
         $cached = Cache::get($cacheKey);
 
         if (is_array($cached)) {
-            return collect($cached)->map(function ($ad) {
-                return (object) $ad;
-            });
+            return collect($cached)->map(fn ($ad) => (object) $ad);
         }
 
         $advertisements = Advertisement::where('is_active', true)
@@ -170,12 +162,10 @@ class FrontController extends Controller
 
         Cache::put($cacheKey, $advertisements, now()->addMinutes(2));
 
-        return collect($advertisements)->map(function ($ad) {
-            return (object) $ad;
-        });
+        return collect($advertisements)->map(fn ($ad) => (object) $ad);
     }
 
-    public function home()
+    private function buildHomeData(): array
     {
         $today = Carbon::today('Asia/Kolkata');
         $yesterday = Carbon::yesterday('Asia/Kolkata');
@@ -254,6 +244,36 @@ class FrontController extends Controller
             );
         }
 
+        return [
+            'games' => $games,
+            'chartGames' => $chartGames,
+            'dates' => $dates,
+            'monthlyResults' => $monthlyResults,
+        ];
+    }
+
+    public function home()
+    {
+        $homeCacheKey = 'a7_front_home_payload_' . Carbon::now('Asia/Kolkata')->format('Y_m_d_H_i');
+
+        $cachedHome = Cache::get($homeCacheKey);
+
+        if (is_array($cachedHome)) {
+            $games = $cachedHome['games'];
+            $chartGames = $cachedHome['chartGames'];
+            $dates = $cachedHome['dates'];
+            $monthlyResults = $cachedHome['monthlyResults'];
+        } else {
+            $homeData = $this->buildHomeData();
+
+            Cache::put($homeCacheKey, $homeData, now()->addSeconds(45));
+
+            $games = $homeData['games'];
+            $chartGames = $homeData['chartGames'];
+            $dates = $homeData['dates'];
+            $monthlyResults = $homeData['monthlyResults'];
+        }
+
         $seo = $this->getSeoHome();
         $advertisements = $this->getActiveAdvertisements();
 
@@ -266,8 +286,6 @@ class FrontController extends Controller
             'advertisements'
         ));
     }
-
-
 
 
 //     private string $apiBaseUrl;

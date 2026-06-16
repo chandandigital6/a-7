@@ -17,6 +17,22 @@
             }
         }
 
+        if (!function_exists('renderAdContent')) {
+            function renderAdContent($html)
+            {
+                if (empty($html)) {
+                    return '';
+                }
+
+                $html = preg_replace('/<img(?![^>]*\bwidth=)/i', '<img width="159"', $html);
+                $html = preg_replace('/<img(?![^>]*\bheight=)/i', '<img height="55"', $html);
+                $html = preg_replace('/<img(?![^>]*\bloading=)/i', '<img loading="lazy"', $html);
+                $html = preg_replace('/<img(?![^>]*\bdecoding=)/i', '<img decoding="async"', $html);
+
+                return $html;
+            }
+        }
+
         $middleAdvertisement = $advertisements->where('position', 'middle')->first();
         $bottomAdvertisement = $advertisements->where('position', 'bottom')->first();
         $sidebarAdvertisement = $advertisements->where('position', 'sidebar')->first();
@@ -24,10 +40,11 @@
         $gameSections = $games->chunk(18);
 
         $chartGameSections = $chartGames->count() > 0
-            ? $chartGames->chunk(ceil($chartGames->count() / 2))
+            ? $chartGames->chunk(max(1, ceil($chartGames->count() / 2)))
             : collect();
 
         $currentYear = now('Asia/Kolkata')->year;
+
         $recordYears = [
             $currentYear,
             $currentYear - 1,
@@ -51,6 +68,11 @@
         }
 
         .a7-live-title a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 6px 12px;
             text-decoration: none;
             color: #111;
         }
@@ -63,7 +85,8 @@
             padding: 10px;
             text-align: center;
             border-bottom: 1px solid #ddd;
-            min-height: 118px;
+            min-height: 126px;
+            background: #fff;
         }
 
         .a7-gamebox a {
@@ -71,6 +94,11 @@
         }
 
         .a7-game-name {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 4px 8px;
             color: #000;
             font-size: 17px;
             font-weight: 800;
@@ -79,15 +107,22 @@
         }
 
         .a7-record-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 4px 8px;
             color: #000;
             font-size: 15px;
             font-weight: 700;
+            line-height: 1.25;
         }
 
         .a7-time-result {
             color: blue;
             font-size: 15px;
             font-weight: bold;
+            line-height: 1.45;
         }
 
         .a7-kal {
@@ -136,6 +171,11 @@
         }
 
         .a7-drag a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 5px 10px;
             color: #0047ff;
             font-size: 18px;
             font-weight: 800;
@@ -145,6 +185,8 @@
         .a7-chart-table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            content-visibility: auto;
+            contain-intrinsic-size: 600px;
         }
 
         .a7-chart-table {
@@ -159,8 +201,9 @@
             background-color: #cc4c1a;
             color: #fff;
             text-align: center;
-            padding: 6px 8px;
+            padding: 8px 10px;
             text-transform: uppercase;
+            border: 1px solid #111;
         }
 
         .a7-chart-table .date-col {
@@ -169,7 +212,7 @@
             color: #fff;
             text-align: center;
             font-weight: bold;
-            padding: 6px 8px;
+            padding: 8px 10px;
         }
 
         .a7-chart-table td {
@@ -177,7 +220,7 @@
             font-weight: bold;
             background-color: #fff;
             color: #111;
-            padding: 6px 2px 7px;
+            padding: 8px 6px;
             text-align: center;
             border: 1px solid #111;
         }
@@ -264,6 +307,7 @@
         .a7-card summary {
             cursor: pointer;
             padding: 16px;
+            min-height: 48px;
             font-size: 19px;
             font-weight: 700;
             color: #ffcc00;
@@ -308,15 +352,22 @@
         }
 
         .a7-record-link-box a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 4px 8px;
             color: #000;
             text-decoration: none;
             font-weight: 800;
+            line-height: 1.3;
         }
 
         @media (max-width: 767px) {
             .a7-gamebox {
                 width: 50%;
                 float: left;
+                min-height: 134px;
             }
         }
 
@@ -371,7 +422,7 @@
                     <div class="rv-ad-box">
                         @if (!empty($middleAdvertisement->content))
                             <div class="addb-content">
-                                {!! $middleAdvertisement->content !!}
+                                {!! renderAdContent($middleAdvertisement->content) !!}
                             </div>
                         @elseif(!empty($middleAdvertisement->title))
                             <div class="rv-ad-name">
@@ -440,7 +491,7 @@
                             Game Play करने के लिए नीचे लिंक पर क्लिक करे
                         </div>
 
-                        <span class="rv-ad-img">
+                        <span class="rv-ad-img rv-small-img">
                             <img src="{{ asset('whatsAppChat.png') }}"
                                  alt="ABHISHEK Bhai"
                                  width="139"
@@ -462,7 +513,7 @@
                 <div class="rv-ad-box rv-middle">
                     @if (!empty($bottomAdvertisement->content))
                         <div class="addb-content">
-                            {!! $bottomAdvertisement->content !!}
+                            {!! renderAdContent($bottomAdvertisement->content) !!}
                         </div>
                     @elseif(!empty($bottomAdvertisement->title))
                         <h2>{{ $bottomAdvertisement->title }}</h2>
@@ -566,11 +617,11 @@
                                     </span>
 
                                     <img class="a7-arrow"
-                                         loading="lazy"
-                                         decoding="async"
                                          src="{{ asset('arrow.gif') }}"
                                          width="20"
                                          height="20"
+                                         loading="lazy"
+                                         decoding="async"
                                          alt="Arrow">
                                 </span>
 
@@ -598,7 +649,7 @@
                 <div class="rv-ad-box">
                     @if (!empty($sidebarAdvertisement->content))
                         <div class="addb-content">
-                            {!! $sidebarAdvertisement->content !!}
+                            {!! renderAdContent($sidebarAdvertisement->content) !!}
                         </div>
                     @elseif(!empty($sidebarAdvertisement->title))
                         <h2 class="rv-ad-name">{{ $sidebarAdvertisement->title }}</h2>
@@ -663,7 +714,7 @@
                     </div>
 
                     <a href="https://wa.me/919896916793" target="_blank" rel="noopener nofollow" style="text-decoration:none;">
-                        <span class="rv-ad-img">
+                        <span class="rv-ad-img rv-small-img">
                             <img src="{{ asset('Wp.png') }}"
                                  alt="ABHISHEK Bhai"
                                  width="139"
@@ -706,7 +757,7 @@
                         @foreach ($dates as $date)
                             @php
                                 $dateKey = $date->format('Y-m-d');
-                                $dayResults = $monthlyResults->get($dateKey, collect());
+                                $dayResults = $monthlyResults->get($dateKey, collect())->keyBy('game_slug');
                             @endphp
 
                             <tr>
@@ -716,7 +767,7 @@
 
                                 @foreach ($sectionChartGames as $chartGame)
                                     @php
-                                        $singleResult = collect($dayResults)->firstWhere('game_slug', $chartGame->slug);
+                                        $singleResult = $dayResults->get($chartGame->slug);
                                         $resultValue = $singleResult->result ?? null;
                                     @endphp
 

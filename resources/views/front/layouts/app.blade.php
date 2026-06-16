@@ -53,7 +53,6 @@
     <link rel="preconnect" href="{{ url('/') }}" crossorigin>
     <link rel="preload" href="{{ asset('A1.png') }}" as="image" fetchpriority="high">
 
-    {{-- CLS fix: CSS ko preload onload se mat lagao, direct stylesheet rakho --}}
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('tamplate/bootstrap/assests1/style.css') }}">
 
@@ -75,6 +74,12 @@
             color: #111;
             font-family: Arial, 'Noto Sans Devanagari', sans-serif;
             overflow-x: hidden;
+        }
+
+        main {
+            display: block;
+            width: 100%;
+            min-height: 400px;
         }
 
         img {
@@ -102,14 +107,26 @@
             object-fit: contain;
         }
 
-        .text-black {
+        .text-black,
+        .text-blacks {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 48px;
+            min-height: 34px;
+            padding: 4px 8px;
+            line-height: 1.25;
             color: #000;
-            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .text-black {
+            font-size: 15px;
         }
 
         .text-blacks {
-            color: #000;
-            font-size: 15px;
+            font-size: 17px;
+            font-weight: 800;
         }
 
         .time_result,
@@ -123,10 +140,6 @@
             color: #000;
             font-size: 17px;
         }
-
-        /* =========================
-           Advertisement CSS
-        ========================= */
 
         .rv-ad-wrap {
             width: 100%;
@@ -195,6 +208,13 @@
             line-height: 1.2 !important;
         }
 
+        .addb-content img {
+            width: 159px !important;
+            height: 55px !important;
+            max-width: 220px !important;
+            object-fit: contain !important;
+        }
+
         .addb-content strong,
         .addb-content b {
             font-weight: 900 !important;
@@ -242,11 +262,15 @@
         }
 
         .rv-ad-img img {
-            width: auto;
-            height: auto;
-            max-height: 55px;
+            width: 159px;
+            height: 55px;
             max-width: 220px;
             object-fit: contain;
+        }
+
+        .rv-ad-img.rv-small-img img {
+            width: 139px;
+            height: 48px;
         }
 
         .rv-middle {
@@ -268,6 +292,11 @@
         }
 
         .rv-result-title a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 4px 10px;
             text-decoration: none;
             color: #111;
         }
@@ -300,6 +329,12 @@
                 white-space: pre-line !important;
             }
 
+            .addb-content img {
+                width: 159px !important;
+                height: 55px !important;
+                max-width: 190px !important;
+            }
+
             .rv-ad-title {
                 font-size: 15px !important;
             }
@@ -315,8 +350,14 @@
             }
 
             .rv-ad-img img {
-                max-height: 48px;
+                width: 159px;
+                height: 55px;
                 max-width: 190px;
+            }
+
+            .rv-ad-img.rv-small-img img {
+                width: 139px;
+                height: 48px;
             }
 
             .rv-result-title {
@@ -331,7 +372,7 @@
 <body>
     @include('front.layouts.header')
 
-    <main>
+    <main id="main-content" role="main">
         @yield('content')
     </main>
 
