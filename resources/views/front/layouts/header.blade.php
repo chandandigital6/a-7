@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="open">
+            {{-- <div class="open">
                 @if(
                     !empty($game->todayResult)
                     && ($game->todayResult->status ?? null) === 'declared'
@@ -88,7 +88,32 @@
                         </strong>
                     </p>
                 @endif
-            </div>
+            </div> --}}
+
+
+
+            <div class="open header-result-visible">
+    @if(
+        !empty($game->todayResult)
+        && in_array(($game->todayResult->status ?? null), ['declared', 'published'])
+        && ($game->todayResult->result ?? null) !== null
+        && ($game->todayResult->result ?? '') !== ''
+    )
+        <p>
+            {{ headerResultFormat($game->todayResult->result) }}
+        </p>
+    @else
+        <p>
+            <strong class="waitimg">
+                <img class="lazy"
+                     src="{{ asset('tamplate/admin/upimages/d.gif') }}"
+                     alt="waiting"
+                     width="40"
+                     height="40">
+            </strong>
+        </p>
+    @endif
+</div>
 
         @empty
             <div class="gname">
@@ -103,27 +128,6 @@
 
 
 
-{{-- <div class="addb" style="background:#e9e9e9; padding:20px; margin-top:10px; text-align:center; border:2px solid #00008b; border-radius:15px;">
-
-    <h2 style="margin:0; font-size:22px; font-weight:bold;">
-        नमस्कार साथियों
-    </h2>
-
-    <p style="margin-top:10px; font-size:20px; font-weight:600; line-height:1.6;">
-        सीधा कंपनी खाईवाल के पास गेम प्ले करे
-        बिंदास 1001% पेमेंट की गारंटी के साथ
-        आपका अपना भाई
-    </p>
-
-    <h2 style="margin-top:25px; font-size:28px; font-weight:bold;">
-        S.K Bhai
-    </h2>
-
-    <img src="{{ asset('Wp.png') }}"
-         alt="S.K Bhai"
-         style="margin-top:10px; max-width:120px; height:auto;">
-
-</div> --}}
 
 
 
@@ -191,4 +195,31 @@
             rotate: 360deg;
         }
     }
+
+
+
+    .header-result-visible,
+.header-result-visible p {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    font-size: 36px !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    text-transform: uppercase !important;
+}
+
+.header-result-visible {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 46px !important;
+    margin: 4px 0 14px !important;
+}
+
+.header-result-visible p {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.45);
+}
 </style>
