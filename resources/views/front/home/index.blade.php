@@ -4,6 +4,35 @@
 
 @section('content')
     @php
+        /*
+        |--------------------------------------------------------------------------
+        | Safety: cache/incomplete object issue fix
+        |--------------------------------------------------------------------------
+        */
+        if ($games instanceof \__PHP_Incomplete_Class) {
+            $games = collect();
+        } else {
+            $games = collect($games ?? []);
+        }
+
+        if ($chartGames instanceof \__PHP_Incomplete_Class) {
+            $chartGames = collect();
+        } else {
+            $chartGames = collect($chartGames ?? []);
+        }
+
+        if ($monthlyResults instanceof \__PHP_Incomplete_Class) {
+            $monthlyResults = collect();
+        } else {
+            $monthlyResults = collect($monthlyResults ?? []);
+        }
+
+        if ($advertisements instanceof \__PHP_Incomplete_Class) {
+            $advertisements = collect();
+        } else {
+            $advertisements = collect($advertisements ?? []);
+        }
+
         if (!function_exists('formatGameResult')) {
             function formatGameResult($value)
             {
@@ -409,7 +438,6 @@
 
     <div class="a7-page">
 
-        {{-- Middle Advertisement --}}
         <div class="drag">
             <h1 class="a7-live-title rv-result-title">
                 <a href="/">
@@ -507,7 +535,6 @@
             @endif
         </div>
 
-        {{-- Bottom Advertisement --}}
         @if ($bottomAdvertisement)
             <section class="rv-ad-wrap" aria-label="Bottom Advertisement">
                 <div class="rv-ad-box rv-middle">
@@ -565,7 +592,6 @@
             </section>
         @endif
 
-        {{-- Game Result Section --}}
         <section class="container-fluid" aria-label="A7 SattaFast Live Result">
             @foreach ($gameSections as $sectionIndex => $gameSection)
                 <div class="{{ $sectionIndex > 0 ? 'mt-4' : '' }}">
@@ -643,7 +669,6 @@
             @endforeach
         </section>
 
-        {{-- Sidebar Advertisement --}}
         @if ($sidebarAdvertisement)
             <section class="rv-ad-wrap" aria-label="Sidebar Advertisement">
                 <div class="rv-ad-box">
@@ -729,7 +754,6 @@
             </section>
         @endif
 
-        {{-- Record Chart Heading --}}
         <div class="a7-drag drag">
             <h2>A7-SATTAFAST RECORD CHART</h2>
             <a href="/">A7-SATTAFAST LIVE RESULT</a>
@@ -739,7 +763,6 @@
             <a href="/">A7-SATTAFAST Chart</a>
         </div>
 
-        {{-- Monthly Chart --}}
         @foreach ($chartGameSections as $sectionIndex => $sectionChartGames)
             <div class="a7-chart-table-wrap table-responsive {{ $sectionIndex > 0 ? 'mt-4' : '' }}">
                 <table class="a7-chart-table month_result_table rtable">
@@ -790,7 +813,12 @@
             @endif
         @endforeach
 
-        {{-- SEO Content --}}
+        {{-- SEO Content same rakha gaya hai --}}
+        <section class="a7-content-section" aria-label="A7 Satta Information">
+            <div class="a7-container">
+              {{-- SEO Content --}}
+       
+       
         <section class="a7-content-section" aria-label="A7 Satta Information">
             <div class="a7-container">
                 <h2 class="a7-title">Play A7 Satta King Result Today and Get Fast & Accurate A7 Satta Updates</h2>
@@ -1028,8 +1056,9 @@
                 </details>
             </div>
         </section>
+            </div>
+        </section>
 
-        {{-- Game Year Record Chart Section --}}
         <section class="a7-record-section" aria-label="Game Year Record Chart">
             @forelse($chartGames as $game)
                 <div class="a7-record-heading">
@@ -1057,3 +1086,29 @@
         </section>
     </div>
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
