@@ -92,6 +92,25 @@
                 </div>
 
                 <div>
+    <label class="block mb-2 font-medium text-gray-700">
+        Year
+    </label>
+
+    <input type="number"
+           name="year"
+           value="{{ old('year', $contentBlock->year ?? '') }}"
+           placeholder="Example: 2025"
+           min="2000"
+           max="2100"
+           class="w-full rounded border-gray-300">
+
+    <p class="text-sm text-gray-500 mt-1">
+        Agar year blank rahega to ye content main game page par show hoga.
+        Agar year doge to ye sirf us game ke year page par show hoga.
+    </p>
+</div>
+
+                <div>
                     <label class="mb-2 block text-sm font-semibold text-neutral-700 dark:text-neutral-300">
                         Content
                     </label>

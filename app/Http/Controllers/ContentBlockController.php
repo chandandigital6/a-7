@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class ContentBlockController extends Controller
 {
-
-
-
     private string $apiBaseUrl;
 
     public function __construct()
@@ -30,15 +27,22 @@ class ContentBlockController extends Controller
             }
 
             return collect($response->json('games', []))
-                ->map(fn($game) => (object) [
+                ->map(fn ($game) => (object) [
                     'id' => $game['id'] ?? null,
                     'name' => $game['name'] ?? '',
                     'slug' => $game['slug'] ?? '',
                     'sort_order' => $game['sort_order'] ?? 0,
+                    'chartYears' => collect($game['chartYears'] ?? [])
+                        ->map(fn ($year) => (object) [
+                            'year' => $year['year'] ?? null,
+                        ])
+                        ->filter(fn ($year) => !empty($year->year))
+                        ->values(),
                 ])
-                ->filter(fn($game) => !empty($game->slug))
+                ->filter(fn ($game) => !empty($game->slug))
                 ->sortBy('sort_order')
                 ->values();
+
         } catch (\Throwable $e) {
             \Log::error('Content Block Game API Error', [
                 'error' => $e->getMessage(),
@@ -47,7 +51,6 @@ class ContentBlockController extends Controller
             return collect();
         }
     }
-
 
     public function index()
     {
@@ -66,13 +69,14 @@ class ContentBlockController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'key'       => ['nullable', 'string', 'max:255', 'unique:content_blocks,key'],
-            'title'     => ['nullable', 'string', 'max:255'],
-            'content'   => ['nullable', 'string'],
-            'is_active' => ['nullable', 'boolean'],
+            'key'         => ['nullable', 'string', 'max:255', 'unique:content_blocks,key'],
+            'title'       => ['nullable', 'string', 'max:255'],
+            'content'     => ['nullable', 'string'],
+            'is_active'   => ['nullable', 'boolean'],
             'game_api_id' => ['nullable', 'string', 'max:255'],
-            'game_name' => ['nullable', 'string', 'max:255'],
-            'game_slug' => ['nullable', 'string', 'max:255'],
+            'game_name'   => ['nullable', 'string', 'max:255'],
+            'game_slug'   => ['nullable', 'string', 'max:255'],
+            'year'        => ['nullable', 'integer', 'min:2000', 'max:2100'],
         ]);
 
         $data['key'] = $data['key'] ?: Str::slug($data['title'] ?? 'content-block') . '-' . time();
@@ -100,12 +104,13 @@ class ContentBlockController extends Controller
                 'max:255',
                 Rule::unique('content_blocks', 'key')->ignore($contentBlock->id),
             ],
-            'title'     => ['nullable', 'string', 'max:255'],
-            'content'   => ['nullable', 'string'],
-            'is_active' => ['nullable', 'boolean'],
+            'title'       => ['nullable', 'string', 'max:255'],
+            'content'     => ['nullable', 'string'],
+            'is_active'   => ['nullable', 'boolean'],
             'game_api_id' => ['nullable', 'string', 'max:255'],
-            'game_name' => ['nullable', 'string', 'max:255'],
-            'game_slug' => ['nullable', 'string', 'max:255'],
+            'game_name'   => ['nullable', 'string', 'max:255'],
+            'game_slug'   => ['nullable', 'string', 'max:255'],
+            'year'        => ['nullable', 'integer', 'min:2000', 'max:2100'],
         ]);
 
         $data['key'] = $data['key'] ?: Str::slug($data['title'] ?? 'content-block') . '-' . $contentBlock->id;
