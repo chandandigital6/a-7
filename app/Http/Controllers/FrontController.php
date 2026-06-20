@@ -436,15 +436,20 @@ public function chart()
     return view('front.chart.index', compact('games', 'seo'));
 }
 
+
 public function gameRecord(string $slug)
 {
-    return $this->yearRecord($slug, now('Asia/Kolkata')->year);
+    // /records/disawar
+    // Main game record page ke liye year current rahega, but SEO/content year NULL se aayega
+    return $this->yearRecord($slug, now('Asia/Kolkata')->year, true);
 }
 
-public function yearRecord(string $slug, int $year)
+public function yearRecord(string $slug, int $year, bool $mainRecordPage = false)
 {
     try {
-        $response = Http::timeout(10)->get($this->apiBaseUrl . "/api/game-year-record/{$slug}/{$year}");
+        $response = Http::timeout(10)->get(
+            $this->apiBaseUrl . "/api/game-year-record/{$slug}/{$year}"
+        );
 
         if ($response->successful()) {
             $apiData = $response->json();
@@ -468,6 +473,7 @@ public function yearRecord(string $slug, int $year)
                 })
                 ->filter(fn ($result) => !empty($result->result_date))
                 ->values();
+
         } else {
             $game = (object) [
                 'id'          => null,
@@ -478,6 +484,7 @@ public function yearRecord(string $slug, int $year)
 
             $results = collect();
         }
+
     } catch (\Throwable $e) {
         \Log::error('Game Year Record API Error', [
             'url'   => $this->apiBaseUrl . "/api/game-year-record/{$slug}/{$year}",
@@ -494,29 +501,222 @@ public function yearRecord(string $slug, int $year)
         $results = collect();
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | SEO Logic
+    |--------------------------------------------------------------------------
+    | /records/disawar      => game_slug = disawar AND year IS NULL
+    | /records/disawar/2025 => game_slug = disawar AND year = 2025
+    |--------------------------------------------------------------------------
+    */
+
+    if ($mainRecordPage) {
+        $seo = SeoPage::where('game_slug', $slug)
+            ->whereNull('year')
+            ->first();
+
+        if (!$seo) {
+            $seo = SeoPage::where('page_key', 'game-record')->first();
+        }
+    } else {
+        $seo = SeoPage::where('game_slug', $slug)
+            ->where('year', $year)
+            ->first();
+
+        if (!$seo) {
+            $seo = SeoPage::where('page_key', 'game-year-record')->first();
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Canonical URL
+    |--------------------------------------------------------------------------
+    */
+
+    $canonicalUrl = $mainRecordPage
+        ? route('game.record', $slug)
+        : route('game.yearRecord', [$slug, $year]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | SEO Dynamic Replace
+    |--------------------------------------------------------------------------
+    */
+
+    if ($seo) {
+        $seo = clone $seo;
+
+        $replace = [
+            '{game}' => $game->name,
+            '{slug}' => $slug,
+            '{year}' => $year,
+        ];
+
+        $seo->canonical_url = $canonicalUrl;
+
+        $seo->meta_title = !empty($seo->meta_title)
+            ? str_replace(array_keys($replace), array_values($replace), $seo->meta_title)
+            : null;
+
+        $seo->meta_description = !empty($seo->meta_description)
+            ? str_replace(array_keys($replace), array_values($replace), $seo->meta_description)
+            : null;
+
+        $seo->meta_keywords = !empty($seo->meta_keywords)
+            ? str_replace(array_keys($replace), array_values($replace), $seo->meta_keywords)
+            : null;
+
+        $seo->og_title = !empty($seo->og_title)
+            ? str_replace(array_keys($replace), array_values($replace), $seo->og_title)
+            : null;
+
+        $seo->og_description = !empty($seo->og_description)
+            ? str_replace(array_keys($replace), array_values($replace), $seo->og_description)
+            : null;
+
+    } else {
+        $seo = (object) [
+            'meta_title' => $mainRecordPage
+                ? "{$game->name} Record Chart"
+                : "{$game->name} {$year} Record Chart",
+
+            'meta_description' => $mainRecordPage
+                ? "{$game->name} record chart, old result and complete satta chart."
+                : "{$game->name} {$year} record chart, old result and complete satta chart.",
+
+            'meta_keywords' => $mainRecordPage
+                ? "{$game->name} record, {$game->name} chart"
+                : "{$game->name} {$year} record, {$game->name} {$year} chart",
+
+            'canonical_url'  => $canonicalUrl,
+            'og_title'       => null,
+            'og_description' => null,
+            'og_image'       => null,
+            'schema_markup'  => null,
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Content Blocks Logic
+    |--------------------------------------------------------------------------
+    | /records/disawar      => game_slug = disawar AND year IS NULL
+    | /records/disawar/2025 => game_slug = disawar AND year = 2025
+    |--------------------------------------------------------------------------
+    */
+
+    if ($mainRecordPage) {
+        $contentBlocks = ContentBlock::where('game_slug', $slug)
+            ->whereNull('year')
+            ->where('is_active', true)
+            ->latest()
+            ->get();
+    } else {
+        $contentBlocks = ContentBlock::where('game_slug', $slug)
+            ->where('year', $year)
+            ->where('is_active', true)
+            ->latest()
+            ->get();
+    }
+
+    return view('front.game.year_record', compact(
+        'game',
+        'results',
+        'year',
+        'seo',
+        'contentBlocks',
+        'mainRecordPage'
+    ));
+}
+
+
+
+
+
+
+
+// public function gameRecord(string $slug)
+// {
+//     return $this->yearRecord($slug, now('Asia/Kolkata')->year);
+// }
+
+// public function yearRecord(string $slug, int $year)
+// {
+//     try {
+//         $response = Http::timeout(10)->get($this->apiBaseUrl . "/api/game-year-record/{$slug}/{$year}");
+
+//         if ($response->successful()) {
+//             $apiData = $response->json();
+
+//             $gameData = $apiData['game'] ?? [];
+
+//             $game = (object) [
+//                 'id'          => $gameData['id'] ?? null,
+//                 'name'        => $gameData['name'] ?? ucwords(str_replace('-', ' ', $slug)),
+//                 'slug'        => $gameData['slug'] ?? $slug,
+//                 'result_time' => $gameData['result_time'] ?? null,
+//             ];
+
+//             $results = collect($apiData['results'] ?? [])
+//                 ->map(function ($result) {
+//                     return (object) [
+//                         'result_date' => $result['result_date'] ?? null,
+//                         'result'      => $result['result'] ?? null,
+//                         'status'      => $result['status'] ?? 'waiting',
+//                     ];
+//                 })
+//                 ->filter(fn ($result) => !empty($result->result_date))
+//                 ->values();
+//         } else {
+//             $game = (object) [
+//                 'id'          => null,
+//                 'name'        => ucwords(str_replace('-', ' ', $slug)),
+//                 'slug'        => $slug,
+//                 'result_time' => null,
+//             ];
+
+//             $results = collect();
+//         }
+//     } catch (\Throwable $e) {
+//         \Log::error('Game Year Record API Error', [
+//             'url'   => $this->apiBaseUrl . "/api/game-year-record/{$slug}/{$year}",
+//             'error' => $e->getMessage(),
+//         ]);
+
+//         $game = (object) [
+//             'id'          => null,
+//             'name'        => ucwords(str_replace('-', ' ', $slug)),
+//             'slug'        => $slug,
+//             'result_time' => null,
+//         ];
+
+//         $results = collect();
+//     }
+
  
-     $contentBlocks = ContentBlock::where('game_slug', $slug)
-    ->where('is_active', true)
-    ->latest()
-    ->get();
+//      $contentBlocks = ContentBlock::where('game_slug', $slug)
+//     ->where('is_active', true)
+//     ->latest()
+//     ->get();
     
 
-    $seo = SeoPage::where('game_slug', $slug)
-    ->where('year', $year)
-    ->first();
+//     $seo = SeoPage::where('game_slug', $slug)
+//     ->where('year', $year)
+//     ->first();
 
-if (!$seo) {
-    $seo = SeoPage::where('game_slug', $slug)
-        ->whereNull('year')
-        ->first();
-}
+// if (!$seo) {
+//     $seo = SeoPage::where('game_slug', $slug)
+//         ->whereNull('year')
+//         ->first();
+// }
 
-if (!$seo) {
-    $seo = SeoPage::where('page_key', 'game-year-record')->first();
-}
+// if (!$seo) {
+//     $seo = SeoPage::where('page_key', 'game-year-record')->first();
+// }
 
-    return view('front.game.year_record', compact('game', 'results', 'year', 'seo', 'contentBlocks'));
-}
+//     return view('front.game.year_record', compact('game', 'results', 'year', 'seo', 'contentBlocks'));
+// }
     
 
     public function contactUs()
