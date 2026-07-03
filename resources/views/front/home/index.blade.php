@@ -1059,31 +1059,29 @@
             </div>
         </section>
 
-        <section class="a7-record-section" aria-label="Game Year Record Chart">
-            @forelse($chartGames as $game)
-                <div class="a7-record-heading">
-                    SATTA RECORD CHART
-                </div>
+       <section class="a7-record-section" aria-label="Game 2026 Record Chart">
+    @forelse($chartGames as $game)
+        <div class="a7-record-heading">
+            SATTA RECORD CHART
+        </div>
 
-                <div class="a7-record-link-box">
-                    <a href="{{ url('records/' . $game->slug) }}">
-                        SATTA RECORD CHART {{ $game->name }}
-                    </a>
-                </div>
+        <div class="a7-record-link-box">
+            <a href="{{ url('records/' . $game->slug) }}">
+                SATTA RECORD CHART {{ $game->name }}
+            </a>
+        </div>
 
-                @foreach ($recordYears as $year)
-                    <div class="a7-record-link-box">
-                        <a href="{{ url('records/' . $game->slug . '/' . $year) }}">
-                            SATTA RECORD CHART {{ $year }}
-                        </a>
-                    </div>
-                @endforeach
-            @empty
-                <div style="background:#fff; padding:20px; text-align:center;">
-                    No record chart found.
-                </div>
-            @endforelse
-        </section>
+        <div class="a7-record-link-box">
+            <a href="{{ url('records/' . $game->slug) }}">
+                SATTA RECORD CHART 2026
+            </a>
+        </div>
+    @empty
+        <div style="background:#fff; padding:20px; text-align:center;">
+            No record chart found.
+        </div>
+    @endforelse
+</section>
     </div>
 @endsection
 
