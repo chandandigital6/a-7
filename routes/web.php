@@ -35,10 +35,7 @@ Route::get('/records/{slug}/{year}', function ($slug, $year) {
     return redirect()->route('game.record', ['slug' => $slug], 301);
 });
 
-// Direct game URL
-Route::get('/{slug}', [FrontController::class, 'gameRecord'])
-    ->where('slug', '^(?!chart$|contact-us$|privacy-policy$|terms-conditions$|records$).+')
-    ->name('game.record');
+
 
 
 Route::get('/sitemap.xml', function () {
@@ -154,3 +151,10 @@ Route::middleware(['auth'])->group(function () {
 
 
 require __DIR__ . '/settings.php';
+
+
+
+// Direct game URL
+Route::get('/{slug}', [FrontController::class, 'gameRecord'])
+    ->where('slug', '^(?!chart$|contact-us$|privacy-policy$|terms-conditions$|records$).+')
+    ->name('game.record');
