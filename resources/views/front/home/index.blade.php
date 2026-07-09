@@ -269,7 +269,7 @@
         }
 
         .a7-title {
-            background: linear-gradient(135deg, #ffcc00, #ff6600);
+            background: linear-gradient(135deg, #151513, #ff6600);
             color: #000;
             padding: 18px;
             border-radius: 12px;
