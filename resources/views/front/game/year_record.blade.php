@@ -79,7 +79,7 @@
     </div>
 
     @if(isset($contentBlocks) && $contentBlocks->count())
-        <div class="mt-8 space-y-6">
+        <div class="mt-8 space-y-6 p-4">
             @foreach($contentBlocks as $block)
                 <div class="rounded-xl border bg-white p-5 shadow-sm">
                     @if($block->title)
