@@ -922,16 +922,16 @@
                 For every a7 satta result to be declared, two operators check for matching figures before we declare the results. It is to confirm that there are no mistakes in the figures. The result is announced once the two records match:
             </p>
             <p>
-                <strong>Disawer Satta:</strong> Disawer is one of the oldest markets in the country. It attracts people in the early morning. Many players refer to the Disawer record chart alongside the Satta King A7 data to check whether cross-market numbers match.
+                <strong>Disawer Satta:</strong> Disawer is one of the oldest markets in the country. It attracts people in the early morning. Many players refer to the <a href="https://a-7sattafast.com/records/disawar" style="color: #f3d706">Disawer record chart</a>  alongside the Satta King A7 data to check whether cross-market numbers match.
             </p>
             <p>
-                <strong>Gali Satta:</strong> Gali Satta is a prominent late-night market. The results generally get posted around midnight. Together, the Gali and a7 satta king fast trends provide a full overview of the daily total volume.
+                <strong>Gali Satta:</strong> <a href="https://a-7sattafast.com/records/gali" style="color: yellow">Gali Satta</a>  is a prominent late-night market. The results generally get posted around midnight. Together, the Gali and a7 satta king fast trends provide a full overview of the daily total volume.
             </p>
             <p>
                 <strong>Faridabad Satta Market:</strong> The Faridabad evening stock market results are announced by 6:00 PM. Faridabad acts as a connection between the day market and the night market, such as Gali. Monitoring the chart numbers in Faridabad would help participants gauge the overall market mood for the rest of the evening.
             </p>
             <p>
-                <strong>Ghaziabad Satta Market:</strong> Ghaziabad satta result outcome comes just after Faridabad's at about 8 PM. This is a very tough market, with a huge number of players every day. We have a special section for Ghaziabad news just beside the A7 Satta King fast updates.
+                <strong>Ghaziabad Satta Market:</strong> <a href="https://a-7sattafast.com/records/ghaziabad" style="color: yellow">Ghaziabad satta result</a>  outcome comes just after Faridabad's at about 8 PM. This is a very tough market, with a huge number of players every day. We have a special section for Ghaziabad news just beside the A7 Satta King fast updates.
             </p>
         </div>
 
