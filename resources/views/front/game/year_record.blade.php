@@ -95,28 +95,34 @@
         </div>
     @endif --}}
 
-
 @if(isset($contentBlocks) && $contentBlocks->count())
-    <!-- Wrapper Container: Width ko manage aur center karne ke liye -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        <div class="space-y-6">
-            @foreach($contentBlocks as $block)
-                <div class="rounded-xl border bg-white p-5 shadow-sm">
-                    @if($block->title)
-                        <h2 class="mb-3 text-xl font-bold text-gray-800">
-                            {{ $block->title }}
-                        </h2>
-                    @endif
-                    <div class="content-block-content text-gray-600">
-                        {!! $block->content !!}
-                    </div>
+    <!-- Outer Wrapper (Container): Jo content ko center karega aur side se chipakne nahi dega -->
+    <div style="max-width: 1200px; margin: 32px auto; padding: 0 20px; width: 100%; box-sizing: border-box;">
+        
+        @foreach($contentBlocks as $block)
+            <!-- Card Block: Border, Padding, Background aur Rounded corners ke liye -->
+            <div style="border: 1px solid #e2e8f0; background-color: #ffffff; padding: 24px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 24px; box-sizing: border-box;">
+                
+                @if($block->title)
+                    <!-- Heading Style -->
+                    <h2 style="margin-top: 0; margin-bottom: 12px; font-size: 22px; font-weight: 700; color: #1a202c; line-height: 1.4;">
+                        {{ $block->title }}
+                    </h2>
+                @endif
+                
+                <!-- Inner Content Style -->
+                <div class="content-block-content" style="color: #4a5568; line-height: 1.6; font-size: 16px;">
+                    {!! $block->content !!}
                 </div>
-            @endforeach
-        </div>
+                
+            </div>
+        @endforeach
+
     </div>
 @endif
 
 
+    
     <div style="text-align:center;margin:20px 0;">
         <a href="{{ url('/chart') }}" style="font-weight:bold;color:#000;">
             BACK TO CHART
