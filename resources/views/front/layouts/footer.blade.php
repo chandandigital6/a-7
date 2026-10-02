@@ -16,13 +16,13 @@
 
 </div>
 
-<a href="https://api.whatsapp.com/send/?phone=918168973121&text&type=phone_number&app_absent=0"
+<a href="https://api.whatsapp.com/send/?phone=8168973121&text&type=phone_number&app_absent=0"
    target="_blank"
    class="whatsappBtn">
     <img src="{{ asset('wapp.png') }}" alt="WhatsApp Icon">
 </a>
 
-<a class="playButton" href="https://wa.me/918168973121">
+<a class="playButton" href="https://wa.me/8168973121">
     <i class="fa fa-arrow-down blink"></i><br>
     PLAY NOW
 </a>
